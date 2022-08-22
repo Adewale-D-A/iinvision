@@ -1,0 +1,42 @@
+@font-face {
+  font-family: YK-sb;
+  src: url(../../font/Yanone_Kaffeesatz/YanoneKaffeesatz-SemiBold.ttf);
+}
+.landing {
+  text-align: center;
+  font-family: YK-sb;
+}
+
+.landing-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.i-landing-pg {
+  position: relative;
+}
+.i-tag::before {
+  content: attr(data-text);
+  width: 0;
+  position: absolute;
+  overflow: hidden;
+  border-right: 4px solid var(--hue);
+  border-radius: 5px;
+  animation: glow 2s linear 0s 1 forwards;
+}
+@keyframes glow {
+  from {
+    width: 0%;
+    color: white;
+  }
+  to {
+    width: 100%;
+    color: var(--hue);
+    filter: drop-shadow(0 0 15px #ffffff);
+  }
+}

@@ -1,0 +1,40 @@
+@font-face {
+  font-family: YK-sb;
+  src: url(../../font/Yanone_Kaffeesatz/YanoneKaffeesatz-SemiBold.ttf);
+}
+@font-face {
+  font-family: DS-rg;
+  src: url(../../font/Dancing_Script/DancingScript-Regular.ttf);
+}
+.home {
+  text-align: center;
+  font-family: YK-sb;
+  background-color: var(--darkmode);
+  min-height: 100vh;
+  color: white;
+  font-size: calc(10px + 2vmin);
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;*/
+}
+.i-logo {
+  color: #faea48;
+  margin-left: 10px;
+}
+.i-motto {
+  font-size: calc(5px + 2vmin);
+  font-family: DS-rg;
+  display: flex;
+  align-items: center;
+}
+.home-header {
+  display: flex;
+  justify-content: space-between;
+}
+.sign-up_in {
+  display: flex;
+}
+.sign_user {
+  margin-right: 20px;
+}
