@@ -1,0 +1,15 @@
+@font-face {
+  font-family: YK-sb;
+  src: url(../../font/Yanone_Kaffeesatz/YanoneKaffeesatz-SemiBold.ttf);
+}
+
+.i-logo {
+  font-family: YK-sb;
+  color: #faea48;
+  margin-left: 10px;
+  font-size: 30px;
+}
+
+.link-style {
+  all: unset;
+}

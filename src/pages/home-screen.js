@@ -1,5 +1,6 @@
 import React from "react";
 import "./pagesCss/home-screen.css";
+import { Link } from "react-router-dom";
 
 function HomeSreen() {
   return (
@@ -9,12 +10,14 @@ function HomeSreen() {
           <span>iinvision &#128161;</span>
         </div>
         <div className="i-motto">
-          <span>document your thoughts and bright ideas</span>
+          <span>document your technological ideas</span>
         </div>
         <div className="sign-up_in">
-          <div className="sign_user">
-            <span>sign in</span>
-          </div>
+          <Link to="/login" className="sign_user">
+            <span className="login_user" text-data="login">
+              login
+            </span>
+          </Link>
           <div className="sign_user">
             <span>signup</span>
           </div>

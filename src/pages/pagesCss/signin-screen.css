@@ -1,0 +1,64 @@
+@font-face {
+  font-family: YK-sb;
+  src: url(../../font/Yanone_Kaffeesatz/YanoneKaffeesatz-SemiBold.ttf);
+}
+@font-face {
+  font-family: EXO2-rg;
+  src: url(../../font/Exo2-Regular.ttf);
+}
+.login-container {
+  background-color: var(--darkmode);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  flex: 0.1;
+  display: flex;
+  justify-content: center;
+}
+main {
+  flex: 0.9;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* font-size: calc(10px + 2vmin); */
+  color: white;
+  font-family: EXO2-rg;
+  overflow: hidden;
+}
+.user-icon {
+  display: flex;
+  justify-content: center;
+}
+.user-i {
+  font-size: 30px;
+}
+input[class="login-input"] {
+  all: unset;
+  background-color: #f9f9c5;
+  padding: 5px 5px 5px 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  width: 255px;
+  transition: 1s;
+  color: #000000;
+}
+input[class="login-input"]:focus {
+  filter: drop-shadow(0 0 15px #ffffff);
+}
+button[class="sub-btn"] {
+  all: unset;
+  text-align: center;
+  margin-top: 10px;
+  width: 250px;
+  background-color: #61b15a;
+  border-radius: 5px;
+  padding: 10px;
+  transition: 1s;
+}
+button[class="sub-btn"]:hover {
+  filter: drop-shadow(0 0 15px #ffffff);
+}

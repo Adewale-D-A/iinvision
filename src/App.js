@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 //import screens
 import HomeSreen from "./pages/home-screen";
 import LandingScreen from "./pages/landing-screen";
+import LoginScreen from "./pages/signin-screen";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingScreen />} />
         <Route path="/home" element={<HomeSreen />} />
+        <Route path="/login" element={<LoginScreen />} />
       </Routes>
     </BrowserRouter>
   );

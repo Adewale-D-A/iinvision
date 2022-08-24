@@ -35,6 +35,29 @@
 .sign-up_in {
   display: flex;
 }
+
 .sign_user {
+  all: unset;
   margin-right: 20px;
+  position: relative;
+}
+.sign_user:hover {
+  cursor: pointer;
+}
+.login_user::before {
+  position: absolute;
+  overflow: hidden;
+  content: attr(text-data);
+  width: 0;
+  transition: 1s;
+}
+.login_user:hover::before {
+  color: #faea48;
+  width: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+  .i-motto {
+    display: none;
+  }
 }
