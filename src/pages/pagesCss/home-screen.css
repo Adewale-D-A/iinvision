@@ -36,22 +36,26 @@
   display: flex;
 }
 
-.sign_user {
+.sign_user,
+.signup-user {
   all: unset;
   margin-right: 20px;
   position: relative;
 }
-.sign_user:hover {
+.sign_user:hover,
+.signup-user:hover {
   cursor: pointer;
 }
-.login_user::before {
+.login_user::before,
+.sign_up_user::before {
   position: absolute;
   overflow: hidden;
   content: attr(text-data);
   width: 0;
   transition: 1s;
 }
-.login_user:hover::before {
+.login_user:hover::before,
+.sign_up_user:hover::before {
   color: #faea48;
   width: 100%;
 }

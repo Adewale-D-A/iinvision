@@ -2,18 +2,97 @@
   font-family: YK-sb;
   src: url(../../font/Yanone_Kaffeesatz/YanoneKaffeesatz-SemiBold.ttf);
 }
-.login {
-  text-align: center;
-  font-family: YK-sb;
+@font-face {
+  font-family: EXO2-rg;
+  src: url(../../font/Exo2-Regular.ttf);
 }
-
-.login-header {
+.signup-container {
   background-color: var(--darkmode);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+header {
+  flex: 0.1;
+  display: flex;
+  justify-content: center;
+}
+main {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  /* font-size: calc(10px + 2vmin); */
   color: white;
+  font-family: EXO2-rg;
+  overflow: hidden;
+}
+.form-flex {
+  display: flex;
+}
+input[class="signup-inputs"],
+input[class="password-inputs"],
+input[class="confirm-password-inputs"] {
+  all: unset;
+  width: 300px;
+  background-color: #e7f0d2;
+  color: #3f4e4f;
+  height: 30px;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin: 10px 10px 10px 0px;
+}
+/* input[class="signup-inputs"]:focus,
+input[class="password-inputs"]:focus,
+input[class="confirm-password-inputs"]:focus {
+  filter: drop-shadow(0 0 10px green);
+} */
+input[class="password-inputs"] {
+  border: 2px solid var(--cue_hue);
+  filter: drop-shadow(0 0 10px var(--cue_hue));
+}
+input[class="confirm-password-inputs"] {
+  border: 2px solid var(--cue_hue_cpi);
+  filter: drop-shadow(0 0 10px var(--cue_hue_cpi));
+}
+.pass-requirements {
+  color: var(--pass_req);
+  font-size: 10px;
+}
+.pass-stat {
+  font-size: 12px;
+  width: 300px;
+}
+.must-contain-req {
+  width: 300px;
+}
+.match-status {
+  color: var(--match_stat);
+  width: 300px;
+  font-size: 10px;
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+}
+button[class="form-btn"] {
+  all: unset;
+  background-color: #5fd068;
+  width: 290px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+input[class="confirm-password-inputs"] {
+  margin: 10px 0px 10px 0px;
+}
+
+@media only screen and (max-width: 500px) {
+  .form-flex {
+    display: flex;
+    flex-direction: column;
+  }
 }

@@ -18,9 +18,11 @@ function HomeSreen() {
               login
             </span>
           </Link>
-          <div className="sign_user">
-            <span>signup</span>
-          </div>
+          <Link to="/signup" className="signup-user">
+            <span text-data="signup" className="sign_up_user">
+              signup
+            </span>
+          </Link>
         </div>
       </header>
     </div>

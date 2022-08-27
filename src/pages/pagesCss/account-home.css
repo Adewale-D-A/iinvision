@@ -1,0 +1,12 @@
+.user-account {
+  text-align: center;
+  font-family: YK-sb;
+  background-color: var(--darkmode);
+  min-height: 100vh;
+  color: white;
+  font-size: calc(10px + 2vmin);
+  /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;*/
+}

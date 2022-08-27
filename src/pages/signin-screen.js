@@ -1,16 +1,43 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import IInvisionLoader from "../components/iinvision-loader";
 import TopBar from "../components/top-bar";
 import "./pagesCss/signin-screen.css";
 
 function LoginScreen() {
+  const navigate = useNavigate();
+
+  // collect user payload
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
+  //signin function
   const Login = (e) => {
     e.preventDefault();
     const hideSubmit = document.getElementsByClassName("ii-submit");
     const showLoader = document.getElementsByClassName("ii-loader");
     hideSubmit[0].style.display = "none";
     showLoader[0].style.display = "block";
+    // navigate("/user", { replace: true });
+    const payloadArray = {
+      username_email: username.toLowerCase(),
+      password: password,
+    };
+    // console.log(payloadArray);
+    axios
+      .post("http://localhost:5000/authenticate/login", payloadArray)
+      .then((response) => {
+        console.log(response);
+        console.log("received");
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
+      });
   };
+
   return (
     <>
       <div style={{ "--darkmode": "#282c34" }} className="login-container">
@@ -33,6 +60,8 @@ function LoginScreen() {
                   placeholder="username or email"
                   className="login-input"
                   id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div>
@@ -43,10 +72,9 @@ function LoginScreen() {
                   placeholder="password"
                   className="login-input"
                   id="password"
-                >
-                  {/* <i class="fas fa-lock"></i> */}
-                  {/* <span>Holla</span> */}
-                </input>
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                ></input>
               </div>
               <div className="submit-btn">
                 <button type="submit" className="sub-btn">

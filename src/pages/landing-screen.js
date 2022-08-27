@@ -5,7 +5,7 @@ function LandingScreen() {
   const navigate = useNavigate();
 
   setTimeout(function () {
-    navigate("./home", { replace: true });
+    navigate("/home", { replace: true });
   }, 2000); //wait 2 seconds
 
   return (
