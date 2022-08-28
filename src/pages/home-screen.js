@@ -1,10 +1,22 @@
 import React from "react";
+import { motion } from "framer-motion";
+
 import "./pagesCss/home-screen.css";
 import { Link } from "react-router-dom";
 
 function HomeSreen() {
   return (
-    <div className="home" style={{ "--darkmode": "#282c34" }}>
+    <motion.div
+      className="home"
+      style={{ "--darkmode": "#282c34" }}
+      //motion framer page animation styling
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{
+        x: "100%",
+        transition: { duration: 0.1 },
+      }}
+    >
       <header className="home-header">
         <div className="i-logo">
           <span>iinvision &#128161;</span>
@@ -25,7 +37,7 @@ function HomeSreen() {
           </Link>
         </div>
       </header>
-    </div>
+    </motion.div>
   );
 }
 

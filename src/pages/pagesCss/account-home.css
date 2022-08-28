@@ -5,8 +5,19 @@
   min-height: 100vh;
   color: white;
   font-size: calc(10px + 2vmin);
-  /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+header {
+  flex: 0.1;
+  display: flex;
+  justify-content: center;
+}
+main {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -61,3 +61,10 @@ button[class="sub-btn"] {
 button[class="sub-btn"]:hover {
   filter: drop-shadow(0 0 15px #ffffff);
 }
+.error-response {
+  font-size: 15px;
+  text-align: center;
+  padding: 5px;
+  width: 250px;
+  background-color: hsl(347, 73%, 49%);
+}

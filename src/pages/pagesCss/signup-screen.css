@@ -89,6 +89,17 @@ button[class="form-btn"] {
 input[class="confirm-password-inputs"] {
   margin: 10px 0px 10px 0px;
 }
+.error-response {
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  text-align: center;
+  padding: 5px;
+  width: 250px;
+  background-color: hsl(347, 73%, 49%);
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
 
 @media only screen and (max-width: 500px) {
   .form-flex {

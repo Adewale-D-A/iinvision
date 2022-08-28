@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import Cookies from "universal-cookie";
 
 import IInvisionLoader from "../components/iinvision-loader";
 import TopBar from "../components/top-bar";
@@ -8,11 +10,14 @@ import "./pagesCss/signin-screen.css";
 
 function LoginScreen() {
   const navigate = useNavigate();
-
+  const cookies = new Cookies();
   // collect user payload
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
+  //load correct error response
+  const [errorClass, setErrorClass] = useState("");
+  const [error, setError] = useState("");
   //signin function
   const Login = (e) => {
     e.preventDefault();
@@ -20,31 +25,57 @@ function LoginScreen() {
     const showLoader = document.getElementsByClassName("ii-loader");
     hideSubmit[0].style.display = "none";
     showLoader[0].style.display = "block";
-    // navigate("/user", { replace: true });
     const payloadArray = {
       username_email: username.toLowerCase(),
       password: password,
     };
-    // console.log(payloadArray);
+    console.log(payloadArray);
     axios
-      .post("http://localhost:5000/authenticate/login", payloadArray)
+      .post("http://localhost:5000/authenticate/login", payloadArray, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((response) => {
-        console.log(response);
-        console.log("received");
+        navigate("/user", { replace: true });
+        cookies.set("username", response.data.user_data.username, {
+          encode: String,
+          sameSite: true,
+        });
+        console.log(response.data);
+        console.log(response.data.user_data.username);
+        // console.log("received");
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response.data.message) {
+          setErrorClass("error-response");
+          setError(error.response.data.message);
+        }
         console.log("error");
+        hideSubmit[0].style.display = "block";
+        showLoader[0].style.display = "none";
       });
   };
 
   return (
     <>
-      <div style={{ "--darkmode": "#282c34" }} className="login-container">
+      <motion.div
+        style={{ "--darkmode": "#282c34" }}
+        className="login-container"
+        //motion framer page animation styling
+        initial={{ width: 0 }}
+        animate={{ width: "100%" }}
+        exit={{
+          x: "100%",
+          transition: { duration: 0.1 },
+        }}
+      >
         <header>
           <TopBar />
         </header>
         <main>
+          <div className={errorClass}>
+            <span>{error}</span>
+          </div>
           <div>
             <form onSubmit={Login}>
               <div className="user-icon">
@@ -60,6 +91,7 @@ function LoginScreen() {
                   placeholder="username or email"
                   className="login-input"
                   id="username"
+                  required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
@@ -72,6 +104,7 @@ function LoginScreen() {
                   placeholder="password"
                   className="login-input"
                   id="password"
+                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 ></input>
@@ -92,7 +125,7 @@ function LoginScreen() {
             </form>
           </div>
         </main>
-      </div>
+      </motion.div>
     </>
   );
 }

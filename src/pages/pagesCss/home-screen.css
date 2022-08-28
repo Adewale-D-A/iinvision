@@ -6,6 +6,9 @@
   font-family: DS-rg;
   src: url(../../font/Dancing_Script/DancingScript-Regular.ttf);
 }
+/* body {
+  background-color: #282c34;
+} */
 .home {
   text-align: center;
   font-family: YK-sb;

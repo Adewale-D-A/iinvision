@@ -1,5 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
+import IInvisionLoader from "../components/iinvision-loader";
 import TopBar from "../components/top-bar";
 import "./pagesCss/signup-screen.css";
 
@@ -7,16 +12,20 @@ import "./pagesCss/signup-screen.css";
 import { passwordStrength } from "check-password-strength";
 
 const SignUpScreen = () => {
+  const navigate = useNavigate();
   //hold user input
-  const [firstname_input, setFirstname_input] = useState();
-  const [lastname_input, setLastname_input] = useState();
-  const [email_input, setEmail_input] = useState();
-  const [username_input, setUsername_input] = useState();
-  const [password_input, setPassword_input] = useState();
-  const [confirmPassword_input, setConfirmPassword_input] = useState();
+  const [firstname_input, setFirstname_input] = useState("");
+  const [lastname_input, setLastname_input] = useState("");
+  const [email_input, setEmail_input] = useState("");
+  const [username_input, setUsername_input] = useState("");
+  const [password_input, setPassword_input] = useState("");
+  const [confirmPassword_input, setConfirmPassword_input] = useState("");
 
+  //set necessary error message to user
   const [passmatch, setPassMatch] = useState("");
   const [passCondition, setPassCondition] = useState("");
+  const [submitCheck, setSubmitCheck] = useState("");
+  const [errorClass, setErrorClass] = useState("");
   //set necessary styles
   const [pass_hue_state, setPass_hue_state] = useState("#282c34");
   const [confirm_pass_hue_state, setConfirm_pass_hue_state] =
@@ -69,17 +78,113 @@ const SignUpScreen = () => {
       setPassMatch("");
     }
   };
+  const RegisterUser = {
+    firstname: firstname_input,
+    lastname: lastname_input,
+    email: email_input,
+    password: password_input,
+    username: username_input,
+  };
+  const SubmitForm = (e) => {
+    e.preventDefault();
+    const hideSubmit = document.getElementsByClassName("ii-submit");
+    const showLoader = document.getElementsByClassName("ii-loader");
+    hideSubmit[0].style.display = "none";
+    showLoader[0].style.display = "block";
+    const passwordIntegrity = passwordStrength(password_input);
+    if (passwordIntegrity.id === 3) {
+      if (password_input === confirmPassword_input) {
+        if (
+          firstname_input &&
+          lastname_input &&
+          email_input &&
+          username_input &&
+          password_input
+        ) {
+          setSubmitCheck("");
+
+          axios
+            .post("http://localhost:5000/authenticate/register", RegisterUser, {
+              headers: { "Content-Type": "application/json" },
+              withCredentials: true,
+            })
+            .then((response) => {
+              navigate("/login", { replace: true });
+              // cookies.set("username", response.data.user_data.username, {
+              //   encode: String,
+              //   sameSite: true,
+              // });
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error.response.data.message);
+              if (error.response.data.message.length === 1) {
+                if (error.response.data.message[0].username) {
+                  setSubmitCheck(error.response.data.message[0].username);
+                  setErrorClass("error-response");
+                  hideSubmit[0].style.display = "block";
+                  showLoader[0].style.display = "none";
+                } else {
+                  setErrorClass("error-response");
+                  setSubmitCheck(error.response.data.message[0].email);
+                  hideSubmit[0].style.display = "block";
+                  showLoader[0].style.display = "none";
+                }
+              } else if (error.response.data.message.length === 2) {
+                setSubmitCheck(
+                  `${error.response.data.message[0].username} and ${error.response.data.message[1].email}`
+                );
+
+                setErrorClass("error-response");
+                hideSubmit[0].style.display = "block";
+                showLoader[0].style.display = "none";
+              } else {
+                setSubmitCheck(error.response.data.message);
+                setErrorClass("error-response");
+                hideSubmit[0].style.display = "block";
+                showLoader[0].style.display = "none";
+              }
+            });
+        } else {
+          setErrorClass("error-response");
+          setSubmitCheck("Please fill out all required fields");
+          hideSubmit[0].style.display = "block";
+          showLoader[0].style.display = "none";
+        }
+      } else {
+        setErrorClass("error-response");
+        setSubmitCheck("passwords do not match");
+        hideSubmit[0].style.display = "block";
+        showLoader[0].style.display = "none";
+      }
+    } else {
+      setSubmitCheck(`password is ${passwordIntegrity.value}`);
+      setErrorClass("error-response");
+      hideSubmit[0].style.display = "block";
+      showLoader[0].style.display = "none";
+    }
+  };
 
   return (
     <>
-      <div style={{ "--darkmode": "#282c34" }} className="signup-container">
+      <motion.div
+        style={{ "--darkmode": "#282c34" }}
+        className="signup-container"
+        //motion framer page animation styling
+        initial={{ width: 0 }}
+        animate={{ width: "100%" }}
+        exit={{ x: 0, transition: { duration: 0.1 } }}
+      >
         <header>
           <TopBar />
         </header>
         <main>
+          <h1 style={{ color: "#5FD068", textAlign: "center" }}>SIGN UP</h1>
+          <div className={errorClass}>
+            <span>{submitCheck}</span>
+          </div>
           <div>
-            <form>
-              <h1 style={{ color: "#5FD068", textAlign: "center" }}>SIGN UP</h1>
+            <form onSubmit={SubmitForm}>
               <div className="form-flex">
                 <div>
                   <label htmlFor="firstname">*firstname</label>
@@ -185,13 +290,18 @@ const SignUpScreen = () => {
               </div>
               <div className="btn-container">
                 <button type="submit" className="form-btn">
-                  submit
+                  <span className="ii-submit">
+                    <span>submit</span>
+                  </span>
+                  <span className="ii-loader" style={{ display: "none" }}>
+                    <IInvisionLoader />
+                  </span>
                 </button>
               </div>
             </form>
           </div>
         </main>
-      </div>
+      </motion.div>
     </>
   );
 };
