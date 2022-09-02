@@ -109,7 +109,7 @@ const SignUpScreen = () => {
               withCredentials: true,
             })
             .then((response) => {
-              navigate("/login", { replace: true });
+              navigate("/emailconfirmation", { replace: true });
               // cookies.set("username", response.data.user_data.username, {
               //   encode: String,
               //   sameSite: true,

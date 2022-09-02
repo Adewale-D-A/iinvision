@@ -1,0 +1,116 @@
+.opt-main-container {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
+.opt-container {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.top-bar {
+  flex: 0.1;
+}
+.otp-input-field {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+input[class="otp-input"] {
+  all: unset;
+  width: 200px;
+  height: 30px;
+  background-color: #f9f9c5;
+  padding: 5px 5px 5px 10px;
+  border-radius: 5px 0px 0px 5px;
+}
+input[class="otp-input"]:focus {
+  transition: 1s;
+  width: 250px;
+  border: 1px solid var(--borderHue);
+  filter: drop-shadow(0 0 10px #ffffff);
+}
+button[class="otp-btn"] {
+  all: unset;
+  height: 30px;
+  width: 100%;
+  background-color: #61b15a;
+  padding: 5px 5px 5px 5px;
+  border-radius: 0px 5px 0px 0px;
+  color: #f9f9c5;
+}
+button[class="otp-btn"]:hover {
+  background-color: #598056;
+  cursor: pointer;
+}
+
+.modal {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: hsl(105, 2%, 49%, 0.8);
+  overflow: hidden;
+}
+.modal-main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon-mark {
+  /* overflow: hidden; */
+  transition: 1s;
+  font-size: 0px;
+  color: var(--okaycolor);
+  animation: movemark 0.5s linear 0s 1 forwards;
+}
+@keyframes movemark {
+  from {
+    color: white;
+    transform: scale(0, 1);
+  }
+  to {
+    font-size: 50px;
+  }
+}
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+.verification-ctn {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+button[class="otp-retry-btn"] {
+  all: unset;
+  width: 100%;
+  background-color: var(--okaycolor);
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+button[class="otp-retry-btn"]:hover {
+  cursor: pointer;
+  background-color: #8b5068;
+}
+.instruction {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--okaycolor);
+}
+.icon-check {
+  filter: drop-shadow(0 0 10px #ffffff);
+}
+.otp-instruction {
+  color: var(--okaycolor);
+  text-align: center;
+}
