@@ -9,7 +9,23 @@
   margin-left: 10px;
   font-size: 30px;
 }
+.i-logo:hover {
+  cursor: pointer;
+}
 
 .link-style {
   all: unset;
+}
+button[class="back-btn"] {
+  all: unset;
+  padding: 5px;
+  color: white;
+  background-color: #706d6d;
+  border-radius: 5px;
+  font-size: 10px;
+}
+button[class="back-btn"]:hover {
+  cursor: pointer;
+  color: black;
+  background-color: white;
 }

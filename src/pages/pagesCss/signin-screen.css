@@ -16,7 +16,9 @@ header {
   flex: 0.1;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
+
 main {
   flex: 0.9;
   display: flex;
@@ -67,4 +69,13 @@ button[class="sub-btn"]:hover {
   padding: 5px;
   width: 250px;
   background-color: hsl(347, 73%, 49%);
+}
+.login-signup {
+  text-align: center;
+}
+.link-signup {
+  color: rgb(179, 221, 245);
+}
+.link-signup:hover {
+  color: #61b15a;
 }

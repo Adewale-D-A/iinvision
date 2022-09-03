@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Cookies from "universal-cookie";
 
@@ -10,6 +10,7 @@ import "./pagesCss/signin-screen.css";
 
 function LoginScreen() {
   const navigate = useNavigate();
+
   const cookies = new Cookies();
   // collect user payload
   const [username, setUsername] = useState("");
@@ -123,6 +124,21 @@ function LoginScreen() {
                 </button>
               </div>
             </form>
+            <div className="login-signup">
+              <span>
+                dont't have an account?{" "}
+                <Link to="/signup" className="link-signup">
+                  {" "}
+                  Signup
+                </Link>
+              </span>
+              <br />
+              <span>
+                <Link to="/login" className="link-signup">
+                  forgot password?
+                </Link>
+              </span>
+            </div>
           </div>
         </main>
       </motion.div>

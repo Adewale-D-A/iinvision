@@ -26,7 +26,7 @@ const EmailOTPConfirmation = () => {
   const verifyOTP = () => {
     axios
       .post(
-        "http://localhost:5000/verifytoken",
+        "http://localhost:5000/emailauth/verifytoken",
         { token: otpInput },
         {
           headers: { "Content-Type": "application/json" },
@@ -48,7 +48,9 @@ const EmailOTPConfirmation = () => {
       .catch((error) => {
         console.log(error);
         setShowModal("");
-        setcloseRetry("retry");
+        setcloseRetry(
+          <i class="fa-sharp fa-solid fa-arrow-rotate-left"> retry</i>
+        );
         setOtpStatus("OTP Rejected");
         setOtpStatusHue("#B20600");
         setIconDisplay(<i class="fa-sharp fa-solid fa-xmark"></i>);
