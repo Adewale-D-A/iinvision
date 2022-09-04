@@ -8,6 +8,8 @@ import LandingScreen from "../pages/landing-screen";
 import LoginScreen from "../pages/signin-screen";
 import SignUpScreen from "../pages/signup-screen";
 import EmailOTPConfirmation from "../pages/OTP";
+import ForgetPassword from "../pages/forgetPassword";
+import ChangePassword from "../pages/changePassword";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -20,6 +22,8 @@ const AnimatedRoutes = () => {
         <Route path="/user" element={<AccountHome />} />
         <Route path="/signup" element={<SignUpScreen />} />
         <Route path="/emailconfirmation" element={<EmailOTPConfirmation />} />
+        <Route path="/resetPassword" element={<ForgetPassword />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="*" element={<LoginScreen />} />
       </Routes>
     </AnimatePresence>

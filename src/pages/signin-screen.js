@@ -134,7 +134,7 @@ function LoginScreen() {
               </span>
               <br />
               <span>
-                <Link to="/login" className="link-signup">
+                <Link to="/resetPassword" className="link-signup">
                   forgot password?
                 </Link>
               </span>

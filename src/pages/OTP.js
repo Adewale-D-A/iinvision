@@ -12,9 +12,7 @@ const EmailOTPConfirmation = () => {
   const [closeRetry, setcloseRetry] = useState("close");
   const [OTPStatus, setOtpStatus] = useState("Accepted");
   const [OtpStatusHue, setOtpStatusHue] = useState("#61b15a");
-  const [OtpInstruction, setOtpInstruction] = useState(
-    "you will be directed to login page in 3s"
-  );
+  const [OtpInstruction, setOtpInstruction] = useState("");
   const [iconDisplay, setIconDisplay] = useState();
 
   const HideModal = (e) => {
@@ -23,7 +21,8 @@ const EmailOTPConfirmation = () => {
 
   const navigate = useNavigate();
 
-  const verifyOTP = () => {
+  const verifyOTP = (e) => {
+    e.preventDefault();
     axios
       .post(
         "http://localhost:5000/emailauth/verifytoken",
@@ -101,21 +100,24 @@ const EmailOTPConfirmation = () => {
               <TopBar />
             </div>
             <div className="otp-input-field">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Email OTP"
-                  className="otp-input"
-                  style={{ "--borderHue": "#FF7F3F" }}
-                  value={otpInput}
-                  onChange={(e) => setOtpInput(e.target.value)}
-                />
-              </div>
-              <div>
-                <button className="otp-btn" onClick={verifyOTP}>
-                  verify
-                </button>
-              </div>
+              <form className="form-email-otp-style" onSubmit={verifyOTP}>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Email OTP"
+                    className="otp-input"
+                    required
+                    style={{ "--borderHue": "#FF7F3F" }}
+                    value={otpInput}
+                    onChange={(e) => setOtpInput(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <button className="otp-btn" type="submit">
+                    verify
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
