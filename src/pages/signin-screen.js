@@ -30,7 +30,6 @@ function LoginScreen() {
       username_email: username.toLowerCase(),
       password: password,
     };
-    console.log(payloadArray);
     axios
       .post("http://localhost:5000/authenticate/login", payloadArray, {
         headers: { "Content-Type": "application/json" },
@@ -42,16 +41,12 @@ function LoginScreen() {
           encode: String,
           sameSite: true,
         });
-        console.log(response.data);
-        console.log(response.data.user_data.username);
-        // console.log("received");
       })
       .catch((error) => {
         if (error.response.data.message) {
           setErrorClass("error-response");
           setError(error.response.data.message);
         }
-        console.log("error");
         hideSubmit[0].style.display = "block";
         showLoader[0].style.display = "none";
       });

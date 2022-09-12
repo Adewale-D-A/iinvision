@@ -29,6 +29,9 @@ const AccountHome = () => {
 
   const [description, setDescription] = useState("");
   const [imageUpload, setImageUpload] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [postDescription, setPostDescription] = useState("");
+  const [errorState, setErrorState] = useState("");
 
   const PushUpload = (e) => {
     e.preventDefault();
@@ -43,9 +46,14 @@ const AccountHome = () => {
       })
       .then((response) => {
         console.log(response);
+        console.log(response.data.data.url);
+        setImageUrl(response.data.data.url);
+        setPostDescription(response.data.data.postDescription);
+        console.log(response.data.data.postDescription);
       })
       .catch((error) => {
-        console.log(error);
+        setErrorState(error.response.data.message);
+        console.log(error.response.data.message);
       });
   };
   return (
@@ -64,6 +72,16 @@ const AccountHome = () => {
         <main>
           <h1>Welcome Home {username}</h1>
         </main>
+        <div>
+          <span>{errorState}</span>
+        </div>
+        <div>
+          <img
+            src={imageUrl}
+            alt={postDescription}
+            style={{ width: "300px" }}
+          />
+        </div>
         <div>
           <form
             onSubmit={PushUpload}
