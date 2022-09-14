@@ -55,7 +55,7 @@ const SignUpScreen = () => {
         `${password_check.value} (only contains: ${password_check.contains} & length = ${password_check.length})`
       );
       setPassCondition(`(must contain: 'lowercase', 'uppercase', 'symbol',
-      'number' & >=10 characters)`);
+      'number' & minimum 10 characters)`);
     } else {
       setPass_hue_state("#282c34");
       setPassword_state("");

@@ -2,7 +2,6 @@
   text-align: center;
   font-family: YK-sb;
   background-color: var(--darkmode);
-  min-height: 100vh;
   color: white;
   font-size: calc(10px + 2vmin);
   display: flex;
@@ -11,13 +10,32 @@
   justify-content: center;
 }
 header {
-  flex: 0.1;
   display: flex;
   justify-content: center;
 }
 main {
-  flex: 0.9;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+textarea[class="upload-descriptor"] {
+  all: unset;
+  background-color: wheat;
+  width: 60vw;
+  border-radius: 10px;
+  font-size: 15px;
+  text-align: start;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px 10px 20px;
+}
+input[class="upload-btn"] {
+  all: unset;
+  background-color: transparent;
+}
+output {
+  display: flex;
+}
+.thumbnail {
+  width: 200px;
 }
