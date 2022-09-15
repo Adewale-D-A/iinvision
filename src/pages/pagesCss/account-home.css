@@ -39,3 +39,6 @@ output {
 .thumbnail {
   width: 200px;
 }
+.toast-pop {
+  font-size: 12px;
+}

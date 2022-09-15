@@ -13,14 +13,34 @@
   flex-direction: column;
 }
 header {
-  flex: 0.1;
+  /* flex: 0.1; */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-main {
-  flex: 0.9;
+.main-login-page {
+  /* flex: 0.9; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* font-size: calc(10px + 2vmin); */
+  color: white;
+  font-family: EXO2-rg;
+  overflow: hidden;
+}
+.side-img {
+  background-color: #61b15a;
+  height: 90vh;
+  flex: 0.5;
+  background-image: url("../../staticAssets/jason-leung--eKZLpj7U0E-unsplash.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+.main-ctn {
+  flex: 0.5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,4 +98,14 @@ button[class="sub-btn"]:hover {
 }
 .link-signup:hover {
   color: #61b15a;
+}
+
+@media only screen and (max-width: 700px) {
+  .side-img {
+    display: none;
+    flex: 0;
+  }
+  .main-ctn {
+    flex: 1;
+  }
 }

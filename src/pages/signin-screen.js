@@ -68,71 +68,74 @@ function LoginScreen() {
         <header>
           <TopBar />
         </header>
-        <main>
-          <div className={errorClass}>
-            <span>{error}</span>
-          </div>
-          <div>
-            <form onSubmit={Login}>
-              <div className="user-icon">
-                <span className="user-i">
-                  <i class="fa-solid fa-user-lock"></i>
+        <main className="main-login-page">
+          <div className="side-img" alt=""></div>
+          <div className="main-ctn">
+            <div className={errorClass}>
+              <span>{error}</span>
+            </div>
+            <div>
+              <form onSubmit={Login}>
+                <div className="user-icon">
+                  <span className="user-i">
+                    <i class="fa-solid fa-user-lock"></i>
+                  </span>
+                </div>
+                <div>
+                  <label htmlFor="username">username</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder="username or email"
+                    className="login-input"
+                    id="username"
+                    required
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password">password</label>
+                  <br />
+                  <input
+                    type="password"
+                    placeholder="password"
+                    className="login-input"
+                    id="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  ></input>
+                </div>
+                <div className="submit-btn">
+                  <button type="submit" className="sub-btn">
+                    <span className="ii-submit">
+                      <span style={{ marginRight: "5px" }}>
+                        <i class="fas fa-fingerprint"></i>
+                      </span>
+                      <span>submit</span>
+                    </span>
+                    <span className="ii-loader" style={{ display: "none" }}>
+                      <IInvisionLoader />
+                    </span>
+                  </button>
+                </div>
+              </form>
+              <div className="login-signup">
+                <span>
+                  dont't have an account?{" "}
+                  <Link to="/signup" className="link-signup">
+                    {" "}
+                    Signup
+                  </Link>
+                </span>
+                <br />
+                <span>
+                  <Link to="/resetPassword" className="link-signup">
+                    forgot password?
+                  </Link>
                 </span>
               </div>
-              <div>
-                <label htmlFor="username">username</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder="username or email"
-                  className="login-input"
-                  id="username"
-                  required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="password">password</label>
-                <br />
-                <input
-                  type="password"
-                  placeholder="password"
-                  className="login-input"
-                  id="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                ></input>
-              </div>
-              <div className="submit-btn">
-                <button type="submit" className="sub-btn">
-                  <span className="ii-submit">
-                    <span style={{ marginRight: "5px" }}>
-                      <i class="fas fa-fingerprint"></i>
-                    </span>
-                    <span>submit</span>
-                  </span>
-                  <span className="ii-loader" style={{ display: "none" }}>
-                    <IInvisionLoader />
-                  </span>
-                </button>
-              </div>
-            </form>
-            <div className="login-signup">
-              <span>
-                dont't have an account?{" "}
-                <Link to="/signup" className="link-signup">
-                  {" "}
-                  Signup
-                </Link>
-              </span>
-              <br />
-              <span>
-                <Link to="/resetPassword" className="link-signup">
-                  forgot password?
-                </Link>
-              </span>
             </div>
           </div>
         </main>

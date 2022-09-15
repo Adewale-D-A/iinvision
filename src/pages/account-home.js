@@ -1,64 +1,163 @@
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import TopBar from "../components/top-bar";
 import "./pagesCss/account-home.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AccountHome = () => {
   const cookies = new Cookies();
   const username = cookies.get("username");
 
-  // const LoadServerTwo = () => {
-  //   axios
-  //     .get("http://localhost:4000/", {
-  //       headers: { "Content-Type": "application/json" },
-  //       withCredentials: true,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   LoadServerTwo();
-  // }, []);
-
   const [description, setDescription] = useState("");
-  const [imageUpload, setImageUpload] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [postDescription, setPostDescription] = useState("");
-  const [errorState, setErrorState] = useState("");
+  const [mediaUpload, setMediaUpload] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [resData, setResData] = useState([]);
 
-  // console.log(imageUpload);
-  // const url = URL.createObjectURL(imageUpload[0]);
-  // console.log(url);
+  const WarnUser = () => {
+    toast.warn(`media and media desciption is required`, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
+
+  const UploadInProgress = () => {
+    toast.info(`upload in progress ...`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
+
+  const UploadSuccess = () => {
+    toast.success("Post Updated", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
+  const GetAll = () => {
+    toast.success("Feeds Updated", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
+
+  const UserTokenFailed = (errorMsg) => {
+    toast.error(`Failed, ${errorMsg}`, {
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  const UploadFailed = (errorMsg) => {
+    toast.error(`${errorMsg}, please try again later`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: 0,
+    });
+  };
+
+  const GetAllPost = () => {
+    axios
+      .get("http://localhost:4000/getAll/getAllItems", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((response) => {
+        setResData(response.data.data);
+        GetAll();
+      })
+      .catch((error) => {
+        if (error.response.data?.message) {
+          if (
+            error.response.data?.message ===
+            "please log in, your access credentials has expired"
+          ) {
+            UserTokenFailed(error.response.data?.message);
+          } else {
+            UploadFailed(error.response.data?.message);
+          }
+        }
+        if (error.message === "Network Error") {
+          UploadFailed(error.message);
+        }
+      });
+  };
+
+  useEffect(() => {
+    GetAllPost();
+  }, []);
 
   const PushUpload = (e) => {
     e.preventDefault();
     let fileUpload = new FormData();
     fileUpload.append("itemDescription", description);
-    fileUpload.append("mediaUpload", imageUpload[0]);
+    fileUpload.append("mediaUpload", mediaUpload[0]);
 
-    axios
-      .put("http://localhost:4000/put/putItem", fileUpload, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-        console.log(response.data.data.url);
-        setImageUrl(response.data.data.url);
-        setPostDescription(response.data.data.postDescription);
-        console.log(response.data.data.postDescription);
-      })
-      .catch((error) => {
-        setErrorState(error.response.data.message);
-        console.log(error.response.data.message);
-      });
+    if (description && mediaUpload[0]) {
+      axios
+        .put("http://localhost:4000/put/putItem", fileUpload, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+          onUploadProgress: (ProgressEvent) => {
+            setUploadProgress(
+              Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+            );
+            UploadInProgress();
+          },
+        })
+        .then((response) => {
+          UploadSuccess();
+          GetAllPost();
+        })
+        .catch((error) => {
+          if (error.response.data?.message) {
+            if (
+              error.response.data?.message ===
+              "please log in, your access credentials has expired"
+            ) {
+              UserTokenFailed(error.response.data?.message);
+            } else {
+              UploadFailed(error.response.data?.message);
+            }
+          }
+          if (error.message === "Network Error") {
+            UploadFailed(error.message);
+          }
+        });
+    } else {
+      WarnUser();
+    }
   };
 
   const checkUpload = (e) => {
@@ -72,7 +171,7 @@ const AccountHome = () => {
 
       const files = e.target.files;
       const output = document.querySelector("#result");
-      setImageUpload(files);
+      setMediaUpload(files);
 
       if (files.length > 0) {
         if (files[0].type.match("image")) {
@@ -118,6 +217,21 @@ const AccountHome = () => {
             <span>Welcome Home {username}</span>
           </div>
         </header>
+        <div>
+          <ToastContainer
+            position="top-center"
+            autoClose={true}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            className="toast-pop"
+          />
+        </div>
+        <div>{uploadProgress}</div>
         <main>
           <div>
             <form
@@ -144,40 +258,27 @@ const AccountHome = () => {
                   onChange={(e) => checkUpload(e)}
                 />
               </div>
-              {/* <div>
-                <input
-                  type="file"
-                  name="avatar"
-                  className="upload-btn"
-                  accept=".jpg,.jpeg,.png"
-                  onChange={(e) => setImageUpload(e.target.files)}
-                />
-              </div> */}
               <button type="submit">submit</button>
             </form>
+            <div>
+              <output id="result" />
+            </div>
           </div>
-          <div>
-            <img src={imageUrl} alt="img" style={{ width: "100px" }} />
-          </div>
+          {/* <div>
+            <span>{errorState}</span>
+          </div> */}
+          {resData.map((post, key) => {
+            return (
+              <div key={post.id}>
+                <img src={post.mediaUpload} style={{ width: "150px" }} alt="" />
+                <h3>{post.description}</h3>
+                <span>{post.dateCreated}</span>
+                <br />
+                <span>{post.dateUpdated}</span>
+              </div>
+            );
+          })}
         </main>
-        <div>
-          <span>{errorState}</span>
-        </div>
-        <div>
-          <img src="" alt={postDescription} style={{ width: "300px" }} />
-        </div>
-        {/* <div>
-          <label htmlFor="files">Media upload</label>
-          <input
-            type="file"
-            id="files"
-            accept="image/jpg, image/png, image/jpeg, image/gif, video/mp4"
-            onChange={(e) => checkUpload(e)}
-          />
-        </div> */}
-        <div>
-          <output id="result" />
-        </div>
       </motion.div>
     </>
   );
