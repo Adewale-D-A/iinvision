@@ -41,7 +41,7 @@ const AccountHome = () => {
     e.preventDefault();
     let fileUpload = new FormData();
     fileUpload.append("itemDescription", description);
-    fileUpload.append("imageUpload", imageUpload[0]);
+    fileUpload.append("mediaUpload", imageUpload[0]);
 
     axios
       .put("http://localhost:4000/put/putItem", fileUpload, {
@@ -63,45 +63,42 @@ const AccountHome = () => {
 
   const checkUpload = (e) => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
+      const hideThumbnail = document.getElementsByClassName("thumbnail");
+      if (hideThumbnail.length > 0) {
+        for (let i = 0; i < hideThumbnail.length; i++) {
+          hideThumbnail[i].style.display = "none";
+        }
+      }
+
       const files = e.target.files;
       const output = document.querySelector("#result");
+      setImageUpload(files);
 
       if (files.length > 0) {
-        for (let i = 0; i < files.length; i++) {
-          const filesUpload = e.target.files;
-          Object.assign(filesUpload[i], {
-            preview: URL.createObjectURL(filesUpload[i]),
+        if (files[0].type.match("image")) {
+          const filesData = e.target.files[0];
+          Object.assign(filesData, {
+            preview: URL.createObjectURL(filesData),
           });
-          // const picReader = new FileReader();
-          // picReader.readAsDataURL(files[i]);
-          // picReader.addEventListener("load", (event) => {
-          //   const picFIle = event.target;
 
           const div = document.createElement("div");
-          div.innerHTML = `<img class="thumbnail" src="${filesUpload[i].preview}" title="${filesUpload[i].name}" alt="${filesUpload[i].name}"/>`;
+          div.innerHTML = `<img class="thumbnail" src="${filesData.preview}" title="${filesData.name}" alt="${filesData.name}"/>`;
           output.appendChild(div);
-          // });
+        } else if (files[0].type.match("video")) {
+          const filesData = e.target.files[0];
+          Object.assign(filesData, {
+            preview: URL.createObjectURL(filesData),
+          });
+
+          const div = document.createElement("div");
+          div.innerHTML = `<video class="thumbnail" controls><source src="${filesData.preview}" type="${filesData.type}"></source><video>`;
+          output.appendChild(div);
+        } else {
+          alert("file type not supported");
         }
       }
     } else {
-      alert("window does not support these files");
-    }
-  };
-
-  const checkVideo = (e) => {
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      const files = e.target.files[0];
-      const output = document.querySelector("#video");
-
-      Object.assign(files, {
-        preview: URL.createObjectURL(files),
-      });
-
-      const div = document.createElement("div");
-      div.innerHTML = `<video class="thumbnail" controls><source src="${files.preview}" type="video/mp4"></source><video>`;
-      output.appendChild(div);
-    } else {
-      alert("window does not support these files");
+      alert("window does not support this files");
     }
   };
 
@@ -139,6 +136,15 @@ const AccountHome = () => {
                 />
               </div>
               <div>
+                <label htmlFor="files">Media upload</label>
+                <input
+                  type="file"
+                  id="files"
+                  accept="image/jpg, image/png, image/jpeg, image/gif, video/mp4"
+                  onChange={(e) => checkUpload(e)}
+                />
+              </div>
+              {/* <div>
                 <input
                   type="file"
                   name="avatar"
@@ -146,7 +152,7 @@ const AccountHome = () => {
                   accept=".jpg,.jpeg,.png"
                   onChange={(e) => setImageUpload(e.target.files)}
                 />
-              </div>
+              </div> */}
               <button type="submit">submit</button>
             </form>
           </div>
@@ -160,38 +166,18 @@ const AccountHome = () => {
         <div>
           <img src="" alt={postDescription} style={{ width: "300px" }} />
         </div>
-        <div>
-          <label htmlFor="files">Select mutliple files</label>
+        {/* <div>
+          <label htmlFor="files">Media upload</label>
           <input
             type="file"
             id="files"
-            multiple="multiple"
-            accept="image/jpg, image/png, image/jpeg, video/mp4, video/mkv"
+            accept="image/jpg, image/png, image/jpeg, image/gif, video/mp4"
             onChange={(e) => checkUpload(e)}
           />
-        </div>
+        </div> */}
         <div>
           <output id="result" />
         </div>
-        <div>
-          <label htmlFor="files">Select video</label>
-          <input
-            type="file"
-            id="files"
-            multiple="multiple"
-            accept="video/mp4, video/mkv, video/avi"
-            onChange={(e) => checkVideo(e)}
-          />
-        </div>
-        <div>
-          <output id="video" />
-        </div>
-
-        {/* <div>
-          <video controls>
-            <source src={howto} type="video/mp4"></source>
-          </video>
-        </div> */}
       </motion.div>
     </>
   );
