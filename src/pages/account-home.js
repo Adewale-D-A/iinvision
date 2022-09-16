@@ -257,7 +257,7 @@ const AccountHome = () => {
                 <input
                   type="file"
                   id="files"
-                  accept="image/jpg, image/png, image/jpeg, image/gif, video/mp4"
+                  accept="image/jpg, image/png, image/jpeg, image/gif, image/tiff, image/bmp, video/mp4"
                   onChange={(e) => checkUpload(e)}
                 />
               </div>
