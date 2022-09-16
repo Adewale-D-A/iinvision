@@ -42,3 +42,6 @@ output {
 .toast-pop {
   font-size: 12px;
 }
+.lazy-load-img {
+  width: 500px;
+}

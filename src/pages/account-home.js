@@ -7,6 +7,9 @@ import "./pagesCss/account-home.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const AccountHome = () => {
   const cookies = new Cookies();
   const username = cookies.get("username");
@@ -264,13 +267,17 @@ const AccountHome = () => {
               <output id="result" />
             </div>
           </div>
-          {/* <div>
-            <span>{errorState}</span>
-          </div> */}
           {resData.map((post, key) => {
             return (
               <div key={post.id}>
-                <img src={post.mediaUpload} style={{ width: "150px" }} alt="" />
+                <LazyLoadImage
+                  src={post.mediaUpload}
+                  placeholderSrc={post.mediaThumbnail}
+                  alt=""
+                  effect="blur"
+                  className="lazy-load-img"
+                  loading="lazy"
+                />
                 <h3>{post.description}</h3>
                 <span>{post.dateCreated}</span>
                 <br />

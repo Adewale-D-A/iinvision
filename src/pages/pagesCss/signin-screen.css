@@ -34,7 +34,8 @@ header {
   background-color: #61b15a;
   height: 90vh;
   flex: 0.5;
-  background-image: url("../../staticAssets/jason-leung--eKZLpj7U0E-unsplash.jpg");
+  border-radius: 10px;
+  background-image: url("../../staticAssets/chef-login-img.jpg");
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
