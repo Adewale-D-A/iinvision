@@ -37,15 +37,15 @@ function LoginScreen() {
       })
       .then((response) => {
         navigate("/user", { replace: true });
-        cookies.set("username", response.data.user_data.username, {
+        cookies.set("username", response.data?.user_data?.username, {
           encode: String,
           sameSite: true,
         });
       })
       .catch((error) => {
-        if (error.response.data.message) {
+        if (error.response.data?.message) {
           setErrorClass("error-response");
-          setError(error.response.data.message);
+          setError(error.response.data?.message);
         }
         hideSubmit[0].style.display = "block";
         showLoader[0].style.display = "none";

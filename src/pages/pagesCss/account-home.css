@@ -42,6 +42,79 @@ output {
 .toast-pop {
   font-size: 12px;
 }
-.lazy-load-img {
-  width: 500px;
+
+/* starting of feeds items styling */
+.feeds-items {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80vw;
+  justify-content: center;
+  align-items: baseline;
+  align-content: stretch;
+}
+.feeds-img-container,
+.feeds-video-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 10px 10px 0px;
+  transition: 0.5s ease-in;
+  /* height: 400px;
+  overflow: hidden; */
+}
+
+.feeds-img-container:hover,
+.feeds-video-container:hover {
+  filter: drop-shadow(0 0 5px #ffffff);
+  transform: scale(1.05, 1.05);
+}
+.lazy-load-img,
+.video-feed {
+  width: 300px;
+  border-radius: 5px 5px 0px 0px;
+}
+.feed-desciption {
+  text-align: start;
+  color: white;
+  overflow: hidden;
+  background-color: #e6dedd;
+}
+.feed-desc-bck {
+  background-color: #525252;
+  width: 100%;
+  transition: 1s ease-out;
+}
+.feed-desc-bck:hover {
+  animation: worp 1s ease-out 0s 1 forwards;
+}
+@keyframes worp {
+  0% {
+    border-radius: 0% 0% 0% 0%;
+  }
+  25% {
+    border-radius: 0% 0% 0% 20%;
+  }
+  50% {
+    border-radius: 0% 0% 0% 40%;
+  }
+  75% {
+    border-radius: 0% 0% 0% 30%;
+  }
+  100% {
+    border-radius: 0% 0% 0% 20%;
+  }
+}
+
+.feed-date {
+  font-size: 10px;
+  text-align: end;
+  margin-left: 10px;
+}
+.description-tag {
+  font-size: 12px;
+  text-align: start;
+  margin-left: 10px;
+}
+.feed-desc {
+  font-size: 15px;
+  margin-left: 10px;
 }

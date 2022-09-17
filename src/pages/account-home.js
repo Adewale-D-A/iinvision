@@ -10,6 +10,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+export const formatDate = (dateString) => {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 const AccountHome = () => {
   const cookies = new Cookies();
   const username = cookies.get("username");
@@ -193,7 +204,7 @@ const AccountHome = () => {
           });
 
           const div = document.createElement("div");
-          div.innerHTML = `<video class="thumbnail" controls><source src="${filesData.preview}" type="${filesData.type}"></source><video>`;
+          div.innerHTML = `<video class="thumbnail" controls><source src="${filesData.preview}" type="${filesData.type}"></source></video>`;
           output.appendChild(div);
         } else {
           alert("file type not supported");
@@ -267,24 +278,63 @@ const AccountHome = () => {
               <output id="result" />
             </div>
           </div>
-          {resData.map((post, key) => {
-            return (
-              <div key={post.id}>
-                <LazyLoadImage
-                  src={post.mediaUpload}
-                  placeholderSrc={post.mediaThumbnail}
-                  alt=""
-                  effect="blur"
-                  className="lazy-load-img"
-                  loading="lazy"
-                />
-                <h3>{post.description}</h3>
-                <span>{post.dateCreated}</span>
-                <br />
-                <span>{post.dateUpdated}</span>
-              </div>
-            );
-          })}
+          <div className="feeds-items">
+            {resData.map((post, key) => {
+              if (post.filetype.match("image")) {
+                return (
+                  <div key={post.id} className="feeds-img-container">
+                    <div>
+                      <LazyLoadImage
+                        src={post.mediaUpload}
+                        placeholderSrc={post.mediaThumbnail}
+                        alt=""
+                        effect="blur"
+                        className="lazy-load-img"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="feed-desciption">
+                      <div className="feed-desc-bck">
+                        <span className="feed-date">
+                          {formatDate(post.dateCreated)}
+                        </span>{" "}
+                        <br />
+                        <span className="description-tag">Description:</span>
+                        <br />
+                        <span className="feed-desc">{post.description}</span>
+                      </div>
+                      {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
+                    </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={post.id} className="feeds-video-container">
+                    <div>
+                      <video class="video-feed" controls className="video-feed">
+                        <source
+                          src={post.mediaUpload}
+                          type={post.filetype}
+                        ></source>
+                      </video>
+                    </div>
+                    <div className="feed-desciption">
+                      <div className="feed-desc-bck">
+                        <span className="feed-date">
+                          {formatDate(post.dateCreated)}
+                        </span>{" "}
+                        <br />
+                        <span className="description-tag">Description:</span>
+                        <br />
+                        <span className="feed-desc">{post.description}</span>
+                      </div>
+                      {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </main>
       </motion.div>
     </>
