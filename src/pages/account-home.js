@@ -29,6 +29,7 @@ const AccountHome = () => {
   const [mediaUpload, setMediaUpload] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [resData, setResData] = useState([]);
+  const [fileChosen, setFileChosen] = useState("No file chosen");
 
   const WarnUser = () => {
     toast.warn(`media and media desciption is required`, {
@@ -188,6 +189,7 @@ const AccountHome = () => {
       setMediaUpload(files);
 
       if (files.length > 0) {
+        setFileChosen(files[0].name);
         if (files[0].type.match("image")) {
           const filesData = e.target.files[0];
           Object.assign(filesData, {
@@ -245,7 +247,6 @@ const AccountHome = () => {
             className="toast-pop"
           />
         </div>
-        <div>{uploadProgress}</div>
         <main>
           <div>
             <form
@@ -253,7 +254,7 @@ const AccountHome = () => {
               method="post"
               encType="multipart/form-data"
             >
-              <div>
+              <div className="description-input">
                 <textarea
                   className="upload-descriptor"
                   type="text"
@@ -262,21 +263,30 @@ const AccountHome = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   name="description"
                 />
+                <div className="output-thumbnail">
+                  <output id="result" />
+                </div>
               </div>
-              <div>
-                <label htmlFor="files">Media upload</label>
-                <input
-                  type="file"
-                  id="files"
-                  accept="image/jpg, image/png, image/jpeg, image/gif, image/tiff, image/bmp, video/mp4"
-                  onChange={(e) => checkUpload(e)}
-                />
+              <div className="upload-sub-btn">
+                <label htmlFor="files" className="choose-file">
+                  Upload Media <i class="fa-solid fa-paperclip"></i>
+                  {" ("}
+                  {fileChosen}
+                  {")"}
+                </label>
+                <div className="hide-file-upload-btn">
+                  <input
+                    type="file"
+                    id="files"
+                    accept="image/jpg, image/png, image/jpeg, image/gif, image/tiff, image/bmp, video/mp4"
+                    onChange={(e) => checkUpload(e)}
+                  />
+                </div>
+                <button type="submit" className="feed-smt-btn">
+                  submit
+                </button>
               </div>
-              <button type="submit">submit</button>
             </form>
-            <div>
-              <output id="result" />
-            </div>
           </div>
           <div className="feeds-items">
             {resData.map((post, key) => {

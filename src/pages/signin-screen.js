@@ -8,6 +8,8 @@ import IInvisionLoader from "../components/iinvision-loader";
 import TopBar from "../components/top-bar";
 import "./pagesCss/signin-screen.css";
 
+import img from "../staticAssets/real.png";
+
 function LoginScreen() {
   const navigate = useNavigate();
 
@@ -68,6 +70,7 @@ function LoginScreen() {
         <header>
           <TopBar />
         </header>
+        <img src={img} alt="" className="img" />
         <main className="main-login-page">
           <div className="side-img" alt=""></div>
           <div className="main-ctn">

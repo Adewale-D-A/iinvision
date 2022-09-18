@@ -11,15 +11,36 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: 1s ease-in;
+}
+.img {
+  z-index: 1;
+  top: 70vh;
+  position: fixed;
+  width: 100vw;
+  right: 200vw;
+  overflow: hidden;
+  animation: back 3s ease-out 2s 1 forwards;
+}
+
+@keyframes back {
+  0% {
+    left: 200vw;
+  }
+  100% {
+    left: -100vw;
+  }
 }
 header {
   /* flex: 0.1; */
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .main-login-page {
+  z-index: 2;
   /* flex: 0.9; */
   display: flex;
   flex-direction: row;
@@ -108,5 +129,8 @@ button[class="sub-btn"]:hover {
   }
   .main-ctn {
     flex: 1;
+  }
+  .img {
+    display: none;
   }
 }
