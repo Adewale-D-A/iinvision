@@ -30,6 +30,7 @@ const AccountHome = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [resData, setResData] = useState([]);
   const [fileChosen, setFileChosen] = useState("No file chosen");
+  const [fileLoader, setFileLoader] = useState("none");
 
   const WarnUser = () => {
     toast.warn(`media and media desciption is required`, {
@@ -140,6 +141,7 @@ const AccountHome = () => {
     fileUpload.append("mediaUpload", mediaUpload[0]);
 
     if (description && mediaUpload[0]) {
+      setFileLoader("");
       axios
         .put("http://localhost:4000/put/putItem", fileUpload, {
           headers: { "Content-Type": "application/json" },
@@ -153,17 +155,22 @@ const AccountHome = () => {
         })
         .then((response) => {
           UploadSuccess();
+          setFileLoader("none");
+          setDescription("");
+          setFileChosen("No file chosen");
+          document.querySelector("#result").style.display = "none";
           GetAllPost();
         })
         .catch((error) => {
-          if (error.response.data?.message) {
+          setFileLoader("none");
+          if (error?.response.data?.message) {
             if (
-              error.response.data?.message ===
+              error?.response.data?.message ===
               "please log in, your access credentials has expired"
             ) {
-              UserTokenFailed(error.response.data?.message);
+              UserTokenFailed(error?.response.data?.message);
             } else {
-              UploadFailed(error.response.data?.message);
+              UploadFailed(error?.response.data?.message);
             }
           }
           if (error.message === "Network Error") {
@@ -267,6 +274,10 @@ const AccountHome = () => {
                   <output id="result" />
                 </div>
               </div>
+              <div
+                className="load-upload"
+                style={{ display: fileLoader }}
+              ></div>
               <div className="upload-sub-btn">
                 <label htmlFor="files" className="choose-file">
                   Upload Media <i class="fa-solid fa-paperclip"></i>
@@ -283,67 +294,77 @@ const AccountHome = () => {
                   />
                 </div>
                 <button type="submit" className="feed-smt-btn">
-                  submit
+                  post
                 </button>
               </div>
             </form>
           </div>
           <div className="feeds-items">
-            {resData.map((post, key) => {
-              if (post.filetype.match("image")) {
-                return (
-                  <div key={post.id} className="feeds-img-container">
-                    <div>
-                      <LazyLoadImage
-                        src={post.mediaUpload}
-                        placeholderSrc={post.mediaThumbnail}
-                        alt=""
-                        effect="blur"
-                        className="lazy-load-img"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="feed-desciption">
-                      <div className="feed-desc-bck">
-                        <span className="feed-date">
-                          {formatDate(post.dateCreated)}
-                        </span>{" "}
-                        <br />
-                        <span className="description-tag">Description:</span>
-                        <br />
-                        <span className="feed-desc">{post.description}</span>
-                      </div>
-                      {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={post.id} className="feeds-video-container">
-                    <div>
-                      <video class="video-feed" controls className="video-feed">
-                        <source
+            {resData
+              .sort(
+                (a, b) =>
+                  new Date(b.dateCreated).getTime() -
+                  new Date(a.dateCreated).getTime()
+              )
+              .map((post, key) => {
+                if (post.filetype.match("image")) {
+                  return (
+                    <div key={post.id} className="feeds-img-container">
+                      <div>
+                        <LazyLoadImage
                           src={post.mediaUpload}
-                          type={post.filetype}
-                        ></source>
-                      </video>
-                    </div>
-                    <div className="feed-desciption">
-                      <div className="feed-desc-bck">
-                        <span className="feed-date">
-                          {formatDate(post.dateCreated)}
-                        </span>{" "}
-                        <br />
-                        <span className="description-tag">Description:</span>
-                        <br />
-                        <span className="feed-desc">{post.description}</span>
+                          placeholderSrc={post.mediaThumbnail}
+                          alt=""
+                          effect="blur"
+                          className="lazy-load-img"
+                          loading="lazy"
+                        />
                       </div>
-                      {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
+                      <div className="feed-desciption">
+                        <div className="feed-desc-bck">
+                          <span className="feed-date">
+                            {formatDate(post.dateCreated)}
+                          </span>{" "}
+                          <br />
+                          <span className="description-tag">Description:</span>
+                          <br />
+                          <span className="feed-desc">{post.description}</span>
+                        </div>
+                        {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
+                      </div>
                     </div>
-                  </div>
-                );
-              }
-            })}
+                  );
+                } else {
+                  return (
+                    <div key={post.id} className="feeds-video-container">
+                      <div>
+                        <video
+                          class="video-feed"
+                          controls
+                          className="video-feed"
+                        >
+                          <source
+                            src={post.mediaUpload}
+                            type={post.filetype}
+                          ></source>
+                        </video>
+                      </div>
+                      <div className="feed-desciption">
+                        <div className="feed-desc-bck">
+                          <span className="feed-date">
+                            {formatDate(post.dateCreated)}
+                          </span>{" "}
+                          <br />
+                          <span className="description-tag">Description:</span>
+                          <br />
+                          <span className="feed-desc">{post.description}</span>
+                        </div>
+                        {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
+                      </div>
+                    </div>
+                  );
+                }
+              })}
           </div>
         </main>
       </motion.div>

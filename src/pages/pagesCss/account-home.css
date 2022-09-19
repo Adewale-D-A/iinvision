@@ -45,6 +45,30 @@ textarea[class="upload-descriptor"] {
   justify-content: center;
   align-items: center;
 }
+.load-upload {
+  height: 5px;
+  overflow: hidden;
+  background-color: #e6dedd;
+  animation: loadup 2s ease-out 0s infinite forwards;
+  border-radius: 10px;
+}
+@keyframes loadup {
+  0% {
+    margin-left: 5vw;
+  }
+  25% {
+    margin-left: 15vw;
+  }
+  50% {
+    margin-left: 25vw;
+  }
+  75% {
+    margin-left: 40vw;
+  }
+  100% {
+    margin-left: 60vw;
+  }
+}
 .hide-file-upload-btn {
   display: none;
 }
@@ -149,6 +173,7 @@ button[class="feed-smt-btn"]:hover {
   font-size: 15px;
   margin-left: 10px;
 }
+
 @media only screen and (max-width: 500px) {
   .feeds-items {
     display: flex;
