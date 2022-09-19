@@ -224,6 +224,18 @@ const AccountHome = () => {
     }
   };
 
+  //pause video when user moves outside tab
+  var videoElement = document.getElementById("videoFeed");
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      videoElement?.pause();
+      // console.log("video paused");
+    } else {
+      videoElement?.play();
+      // console.log("video is playing");
+    }
+  });
   return (
     <>
       <motion.div
@@ -342,6 +354,7 @@ const AccountHome = () => {
                           class="video-feed"
                           controls
                           className="video-feed"
+                          id="videoFeed"
                         >
                           <source
                             src={post.mediaUpload}
