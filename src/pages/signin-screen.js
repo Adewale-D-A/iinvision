@@ -60,12 +60,13 @@ function LoginScreen() {
         style={{ "--darkmode": "#282c34" }}
         className="login-container"
         //motion framer page animation styling
-        initial={{ width: 0 }}
-        animate={{ width: "100%" }}
-        exit={{
-          x: "100%",
-          transition: { duration: 0.1 },
-        }}
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        // exit={{
+        //   x: "100%",
+        //   transition: { duration: 0.1 },
+        // }}
+        transition={{ duration: 0.1 }}
       >
         <header>
           <TopBar />

@@ -171,9 +171,9 @@ const SignUpScreen = () => {
         style={{ "--darkmode": "#282c34" }}
         className="signup-container"
         //motion framer page animation styling
-        initial={{ width: 0 }}
-        animate={{ width: "100%" }}
-        exit={{ x: 0, transition: { duration: 0.1 } }}
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.1 }}
       >
         <header>
           <TopBar />

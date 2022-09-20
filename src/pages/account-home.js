@@ -242,9 +242,9 @@ const AccountHome = () => {
         className="user-account"
         style={{ "--darkmode": "#282c34" }}
         //motion framer page animation styling
-        initial={{ width: 0, overflow: "hidden" }}
-        animate={{ width: "100%" }}
-        exit={{ x: "100%", transition: { duration: 0.1 } }}
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.1 }}
       >
         <header>
           <TopBar />
@@ -305,9 +305,14 @@ const AccountHome = () => {
                     onChange={(e) => checkUpload(e)}
                   />
                 </div>
-                <button type="submit" className="feed-smt-btn">
+                <motion.button
+                  type="submit"
+                  className="feed-smt-btn"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
                   post
-                </button>
+                </motion.button>
               </div>
             </form>
           </div>
@@ -321,7 +326,18 @@ const AccountHome = () => {
               .map((post, key) => {
                 if (post.filetype.match("image")) {
                   return (
-                    <div key={post.id} className="feeds-img-container">
+                    <motion.div
+                      key={post.id}
+                      className="feeds-img-container"
+                      initial={{ x: "-20vw" }}
+                      whileInView={{
+                        x: 0,
+                      }}
+                      transition={{
+                        duration: 0.1,
+                      }}
+                      // viewport={{ once: true }}
+                    >
                       <div>
                         <LazyLoadImage
                           src={post.mediaUpload}
@@ -344,11 +360,22 @@ const AccountHome = () => {
                         </div>
                         {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 } else {
                   return (
-                    <div key={post.id} className="feeds-video-container">
+                    <motion.div
+                      key={post.id}
+                      className="feeds-video-container"
+                      initial={{ x: "-20vw" }}
+                      whileInView={{
+                        x: 0,
+                      }}
+                      transition={{
+                        duration: 0.1,
+                      }}
+                      // viewport={{ once: true }}
+                    >
                       <div>
                         <video
                           class="video-feed"
@@ -374,7 +401,7 @@ const AccountHome = () => {
                         </div>
                         {/* <span>Date updated: {formatDate(post.dateUpdated)}</span> */}
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 }
               })}
