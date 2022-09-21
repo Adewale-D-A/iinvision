@@ -1,6 +1,6 @@
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import TopBar from "../components/top-bar";
 import "./pagesCss/account-home.css";
@@ -103,7 +103,7 @@ const AccountHome = () => {
     });
   };
 
-  const GetAllPost = () => {
+  const getAllPost = useCallback(() => {
     axios
       .get("http://localhost:4000/getAll/getAllItems", {
         headers: { "Content-Type": "application/json" },
@@ -128,11 +128,11 @@ const AccountHome = () => {
           UploadFailed(error.message);
         }
       });
-  };
+  }, []);
 
   useEffect(() => {
-    GetAllPost();
-  }, []);
+    getAllPost();
+  }, [getAllPost]);
 
   const PushUpload = (e) => {
     e.preventDefault();
@@ -159,7 +159,7 @@ const AccountHome = () => {
           setDescription("");
           setFileChosen("No file chosen");
           document.querySelector("#result").style.display = "none";
-          GetAllPost();
+          getAllPost();
         })
         .catch((error) => {
           setFileLoader("none");
@@ -231,11 +231,9 @@ const AccountHome = () => {
     if (document.visibilityState === "hidden") {
       videoElement?.pause();
       // console.log("video paused");
-    } else {
-      videoElement?.play();
-      // console.log("video is playing");
     }
   });
+
   return (
     <>
       <motion.div
