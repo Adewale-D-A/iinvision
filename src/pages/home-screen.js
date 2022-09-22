@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 
 import "./pagesCss/home-screen.css";
 import { Link } from "react-router-dom";
+import pizzaSlice1 from "../staticAssets/pizza_display_1.jpg";
+import pizzaSlice2 from "../staticAssets/pizza_display_2.jpg";
 
 function HomeSreen() {
   return (
@@ -35,24 +37,29 @@ function HomeSreen() {
         </div>
       </header>
       <main>
-        <motion.div
-          className="div-main-1"
-          initial={{
-            x: -400,
-          }}
-          whileInView={{ x: 0, transition: { duration: 1 } }}
-        >
-          <h1>Hello</h1>
-        </motion.div>
-        <motion.div
-          className="div-main-2"
-          initial={{
-            x: 400,
-          }}
-          whileInView={{ x: 0, transition: { duration: 1 } }}
-        >
-          <h1>World</h1>
-        </motion.div>
+        <div className="img-ctn">
+          <div className="dash-text">
+            <h1>recipe book</h1>
+          </div>
+          <motion.img
+            src={pizzaSlice1}
+            alt=""
+            className="piza_home"
+            initial={{
+              x: -400,
+            }}
+            whileInView={{ x: 0, transition: { duration: 1 } }}
+          />
+          <motion.img
+            src={pizzaSlice2}
+            alt=""
+            className="piza_home"
+            initial={{
+              x: 400,
+            }}
+            whileInView={{ x: 0, transition: { duration: 1 } }}
+          />
+        </div>
       </main>
       <div className="footer-menu">
         <h1>Footer</h1>
