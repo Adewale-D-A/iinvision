@@ -1,6 +1,6 @@
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Cookies from "universal-cookie";
 import TopBar from "../components/top-bar";
 import "./pagesCss/account-home.css";
@@ -22,6 +22,16 @@ export const formatDate = (dateString) => {
 };
 
 const AccountHome = () => {
+  const toastFormat = useMemo(() => {
+    return {
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    };
+  }, []);
+
   const cookies = new Cookies();
   const username = cookies.get("username");
 
@@ -32,76 +42,56 @@ const AccountHome = () => {
   const [fileChosen, setFileChosen] = useState("No file chosen");
   const [fileLoader, setFileLoader] = useState("none");
 
-  const WarnUser = () => {
+  const WarnUser = useCallback(() => {
     toast.warn(`media and media desciption is required`, {
       position: "top-center",
       autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: 0,
+      ...toastFormat,
     });
-  };
+  }, [toastFormat]);
 
-  const UploadInProgress = () => {
+  const UploadInProgress = useCallback(() => {
     toast.info(`upload in progress ...`, {
       position: "top-right",
       autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: 0,
+      ...toastFormat,
     });
-  };
+  }, [toastFormat]);
 
-  const UploadSuccess = () => {
+  const UploadSuccess = useCallback(() => {
     toast.success("Post Updated", {
       position: "top-right",
       autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: 0,
+      ...toastFormat,
     });
-  };
-  const GetAll = () => {
+  }, [toastFormat]);
+
+  const GetAll = useCallback(() => {
     toast.success("Feeds Updated", {
       position: "top-center",
       autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: 0,
+      ...toastFormat,
     });
-  };
+  }, [toastFormat]);
 
-  const UserTokenFailed = (errorMsg) => {
-    toast.error(`Failed, ${errorMsg}`, {
-      position: "top-right",
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    });
-  };
+  const UserTokenFailed = useCallback(
+    (errorMsg) => {
+      toast.error(`Failed, ${errorMsg}`, {
+        position: "top-right",
+        autoClose: false,
+        limit: 2,
+        ...toastFormat,
+      });
+    },
+    [toastFormat]
+  );
 
-  const UploadFailed = (errorMsg) => {
-    toast.error(`${errorMsg}, please try again later`, {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: 0,
-    });
-  };
+  const UploadFailed = useCallback(
+    (errorMsg) => {
+      toast.error(`${errorMsg}, please try again later`, toastFormat);
+    },
+    [toastFormat]
+  );
 
   const getAllPost = useCallback(() => {
     axios
@@ -128,59 +118,71 @@ const AccountHome = () => {
           UploadFailed(error.message);
         }
       });
-  }, []);
+  }, [GetAll, UploadFailed, UserTokenFailed]);
 
   useEffect(() => {
     getAllPost();
   }, [getAllPost]);
 
-  const PushUpload = (e) => {
-    e.preventDefault();
-    let fileUpload = new FormData();
-    fileUpload.append("itemDescription", description);
-    fileUpload.append("mediaUpload", mediaUpload[0]);
+  const PushUpload = useCallback(
+    (e) => {
+      e.preventDefault();
+      let fileUpload = new FormData();
+      fileUpload.append("itemDescription", description);
+      fileUpload.append("mediaUpload", mediaUpload[0]);
 
-    if (description && mediaUpload[0]) {
-      setFileLoader("");
-      axios
-        .put("http://localhost:4000/put/putItem", fileUpload, {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-          onUploadProgress: (ProgressEvent) => {
-            setUploadProgress(
-              Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-            );
-            UploadInProgress();
-          },
-        })
-        .then((response) => {
-          UploadSuccess();
-          setFileLoader("none");
-          setDescription("");
-          setFileChosen("No file chosen");
-          document.querySelector("#result").style.display = "none";
-          getAllPost();
-        })
-        .catch((error) => {
-          setFileLoader("none");
-          if (error?.response.data?.message) {
-            if (
-              error?.response.data?.message ===
-              "please log in, your access credentials has expired"
-            ) {
-              UserTokenFailed(error?.response.data?.message);
-            } else {
-              UploadFailed(error?.response.data?.message);
+      if (description && mediaUpload[0]) {
+        setFileLoader("");
+        axios
+          .put("http://localhost:4000/put/putItem", fileUpload, {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+            onUploadProgress: (ProgressEvent) => {
+              setUploadProgress(
+                Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+              );
+              UploadInProgress();
+            },
+          })
+          .then((response) => {
+            UploadSuccess();
+            setFileLoader("none");
+            setDescription("");
+            setFileChosen("No file chosen");
+            document.querySelector("#result").style.display = "none";
+            getAllPost();
+          })
+          .catch((error) => {
+            setFileLoader("none");
+            if (error?.response.data?.message) {
+              if (
+                error?.response.data?.message ===
+                "please log in, your access credentials has expired"
+              ) {
+                UserTokenFailed(error?.response.data?.message);
+              } else {
+                UploadFailed(error?.response.data?.message);
+              }
             }
-          }
-          if (error.message === "Network Error") {
-            UploadFailed(error.message);
-          }
-        });
-    } else {
-      WarnUser();
-    }
-  };
+            if (error.message === "Network Error") {
+              UploadFailed(error.message);
+            }
+          });
+      } else {
+        WarnUser();
+      }
+    },
+    [
+      description,
+      mediaUpload,
+      UploadFailed,
+      UploadInProgress,
+      UploadSuccess,
+      UserTokenFailed,
+      WarnUser,
+      getAllPost,
+    ]
+  );
 
   const checkUpload = (e) => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
