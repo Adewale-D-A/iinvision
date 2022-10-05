@@ -25,7 +25,7 @@ const EmailOTPConfirmation = () => {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:5000/emailauth/verifytoken",
+        `${process.env.REACT_APP_AUTH_BACKEND_URL}/emailauth/verifytoken`,
         { token: otpInput },
         {
           headers: { "Content-Type": "application/json" },

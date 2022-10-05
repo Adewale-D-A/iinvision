@@ -40,7 +40,7 @@ const ChangePassword = () => {
         if (newPassword === confirmPassword) {
           axios
             .post(
-              "http://localhost:5000/pass/resetPassword",
+              `${process.env.REACT_APP_AUTH_BACKEND_URL}/pass/resetPassword`,
               { resetCode: emailToken, newPassword: newPassword },
               {
                 headers: { "Content-Type": "application/json" },

@@ -18,7 +18,7 @@ const ForgetPassword = () => {
     if (emailInput) {
       axios
         .post(
-          "http://localhost:5000/emailauth/resetotp",
+          `${process.env.REACT_APP_AUTH_BACKEND_URL}/emailauth/resetotp`,
           { email: emailInput },
           {
             headers: { "Content-Type": "application/json" },

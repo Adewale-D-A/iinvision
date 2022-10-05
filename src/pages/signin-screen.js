@@ -33,16 +33,26 @@ function LoginScreen() {
       password: password,
     };
     axios
-      .post("http://localhost:5000/authenticate/login", payloadArray, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
+      .post(
+        `${process.env.REACT_APP_AUTH_BACKEND_URL}/authenticate/login`,
+        payloadArray,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
       .then((response) => {
-        navigate("/user", { replace: true });
         cookies.set("username", response.data?.user_data?.username, {
           encode: String,
           sameSite: true,
         });
+        cookies.set("uz96_o", response.data?.access, {
+          encode: String,
+          maxAge: 1000 * 60 * 30, //10mins
+          secure: true,
+          sameSite: true,
+        });
+        navigate("/user", { replace: true });
       })
       .catch((error) => {
         if (error.response.data?.message) {

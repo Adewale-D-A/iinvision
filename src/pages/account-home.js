@@ -34,6 +34,7 @@ const AccountHome = () => {
 
   const cookies = new Cookies();
   const username = cookies.get("username");
+  const Accesstoken = cookies.get("uz96_o");
 
   const [description, setDescription] = useState("");
   const [mediaUpload, setMediaUpload] = useState("");
@@ -95,8 +96,11 @@ const AccountHome = () => {
 
   const getAllPost = useCallback(() => {
     axios
-      .get("http://localhost:4000/getAll/getAllItems", {
-        headers: { "Content-Type": "application/json" },
+      .get(`${process.env.REACT_APP_UPLOAD_BACKEND_URL}/getAll/getAllItems`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Accesstoken}`,
+        },
         withCredentials: true,
       })
       .then((response) => {
@@ -118,7 +122,7 @@ const AccountHome = () => {
           UploadFailed(error.message);
         }
       });
-  }, [GetAll, UploadFailed, UserTokenFailed]);
+  }, [GetAll, UploadFailed, UserTokenFailed, Accesstoken]);
 
   useEffect(() => {
     getAllPost();
@@ -134,16 +138,23 @@ const AccountHome = () => {
       if (description && mediaUpload[0]) {
         setFileLoader("");
         axios
-          .put("http://localhost:4000/put/putItem", fileUpload, {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-            onUploadProgress: (ProgressEvent) => {
-              setUploadProgress(
-                Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-              );
-              UploadInProgress();
-            },
-          })
+          .put(
+            `${process.env.REACT_APP_UPLOAD_BACKEND_URL}/put/putItem`,
+            fileUpload,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Accesstoken}`,
+              },
+              withCredentials: true,
+              onUploadProgress: (ProgressEvent) => {
+                setUploadProgress(
+                  Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                );
+                UploadInProgress();
+              },
+            }
+          )
           .then((response) => {
             UploadSuccess();
             setFileLoader("none");
@@ -181,6 +192,7 @@ const AccountHome = () => {
       UserTokenFailed,
       WarnUser,
       getAllPost,
+      Accesstoken,
     ]
   );
 

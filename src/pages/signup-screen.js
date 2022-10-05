@@ -104,10 +104,14 @@ const SignUpScreen = () => {
           setSubmitCheck("");
 
           axios
-            .post("http://localhost:5000/authenticate/register", RegisterUser, {
-              headers: { "Content-Type": "application/json" },
-              withCredentials: true,
-            })
+            .post(
+              `${process.env.REACT_APP_AUTH_BACKEND_URL}/authenticate/register`,
+              RegisterUser,
+              {
+                headers: { "Content-Type": "application/json" },
+                withCredentials: true,
+              }
+            )
             .then((response) => {
               navigate("/emailconfirmation", { replace: true });
               // cookies.set("username", response.data.user_data.username, {
@@ -117,7 +121,7 @@ const SignUpScreen = () => {
               console.log(response);
             })
             .catch((error) => {
-              console.log(error.response.data.message);
+              console.log(error);
               if (error.response.data.message.length === 1) {
                 if (error.response.data.message[0].username) {
                   setSubmitCheck(error.response.data.message[0].username);
