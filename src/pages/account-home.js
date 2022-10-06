@@ -22,6 +22,9 @@ export const formatDate = (dateString) => {
 };
 
 const AccountHome = () => {
+  // useEffect(() => {
+  //   console.log(process.env.REACT_APP_UPLOAD_BACKEND_URL);
+  // }, []);
   const toastFormat = useMemo(() => {
     return {
       hideProgressBar: false,
@@ -55,6 +58,7 @@ const AccountHome = () => {
     toast.info(`upload in progress ...`, {
       position: "top-right",
       autoClose: 2000,
+      limit: 2,
       ...toastFormat,
     });
   }, [toastFormat]);
@@ -71,6 +75,7 @@ const AccountHome = () => {
     toast.success("Feeds Updated", {
       position: "top-center",
       autoClose: 1000,
+      limit: 1,
       ...toastFormat,
     });
   }, [toastFormat]);
@@ -151,7 +156,6 @@ const AccountHome = () => {
                 setUploadProgress(
                   Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
                 );
-                UploadInProgress();
               },
             }
           )
@@ -164,6 +168,7 @@ const AccountHome = () => {
             getAllPost();
           })
           .catch((error) => {
+            console.log(error);
             setFileLoader("none");
             if (error?.response.data?.message) {
               if (
@@ -325,6 +330,7 @@ const AccountHome = () => {
                 >
                   post
                 </motion.button>
+                <span>{uploadProgress}%</span>
               </div>
             </form>
           </div>
