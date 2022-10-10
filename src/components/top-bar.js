@@ -14,7 +14,7 @@ const TopBar = () => {
           <i class="fa-solid fa-arrow-left-long"> BACK</i>{" "}
         </button>
       </div>
-      <Link to="/" className="link-style">
+      <Link to="/home" className="link-style">
         <div className="i-logo">
           <span>iinvision &#128161;</span>
         </div>

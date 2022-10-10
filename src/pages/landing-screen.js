@@ -1,17 +1,17 @@
 import "./pagesCss/landing-screen.css";
-// import { useNavigate } from "react-router-dom";
-// import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 
 function LandingScreen() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   setTimeout(function () {
-  //     // navigate(-1);
-  //     navigate("/home", { replace: true });
-  //   }, 2000); //wait 2 seconds
-  // }, [navigate]);
+  useEffect(() => {
+    setTimeout(function () {
+      // navigate(-1);
+      navigate("/home", { replace: true });
+    }, 2000); //wait 2 seconds
+  }, [navigate]);
 
   return (
     <motion.div

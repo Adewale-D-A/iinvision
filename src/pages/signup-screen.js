@@ -182,7 +182,7 @@ const SignUpScreen = () => {
         <header>
           <TopBar />
         </header>
-        <main>
+        <main className="signup-main">
           <h1 style={{ color: "#5FD068", textAlign: "center" }}>SIGN UP</h1>
           <div className={errorClass}>
             <span>{submitCheck}</span>

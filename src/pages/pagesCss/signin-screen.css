@@ -11,7 +11,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: 1s ease-in;
+  transition: 0.5s ease-in;
 }
 .img {
   z-index: 1;
@@ -88,7 +88,7 @@ input[class="login-input"] {
   margin-top: 5px;
   border-radius: 5px;
   width: 255px;
-  transition: 1s;
+  transition: 0.5s;
   color: #000000;
 }
 input[class="login-input"]:focus {
@@ -102,7 +102,7 @@ button[class="sub-btn"] {
   background-color: #61b15a;
   border-radius: 5px;
   padding: 10px;
-  transition: 1s;
+  transition: 0.5s;
 }
 button[class="sub-btn"]:hover {
   filter: drop-shadow(0 0 15px #ffffff);

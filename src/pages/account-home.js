@@ -283,7 +283,7 @@ const AccountHome = () => {
             className="toast-pop"
           />
         </div>
-        <main>
+        <main className="user-home">
           <div>
             <form
               onSubmit={PushUpload}

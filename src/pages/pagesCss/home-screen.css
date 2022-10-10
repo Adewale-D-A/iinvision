@@ -10,16 +10,10 @@
   background-color: #282c34;
 } */
 .home {
-  text-align: center;
   font-family: YK-sb;
   background-color: var(--darkmode);
-  min-height: 100vh;
   color: white;
   font-size: calc(10px + 2vmin);
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;*/
 }
 .i-logo {
   color: #faea48;
@@ -69,8 +63,9 @@
   background-image: linear-gradient(rgb(114, 80, 80), rgb(255, 145, 0));
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 80vh;
   position: relative;
+  overflow: hidden;
 }
 .dash-text {
   position: absolute;
@@ -83,7 +78,132 @@
 .footer-menu {
   height: 100vh;
 }
+.body-feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 
+.home-feed-ctn {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+.home-feed-items {
+  display: flex;
+  flex-direction: column;
+}
+.img-ctn-feed {
+  position: relative;
+  width: 300px;
+  height: 210px;
+  overflow: hidden;
+}
+.feed-ctn {
+  width: 100%;
+  height: auto;
+  position: absolute;
+}
+.price-tag {
+  position: absolute;
+  text-align: end;
+  width: 100%;
+  color: white;
+  transition: 0.5s;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.price-tag:hover {
+  cursor: pointer;
+  font-size: 100px;
+}
+.item-price {
+  padding: 10px;
+  background-color: hsl(125, 55%, 59%, 0.5);
+  border-radius: 10px 0px 10px 0px;
+}
+.feed-intr-items {
+  width: 300px;
+  height: 60px;
+  overflow: hidden;
+  position: relative;
+}
+.feed-readmore {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  color: rgb(68, 68, 233);
+}
+.readmore {
+  padding: 2px;
+  color: #ffffff;
+  background-color: rgb(0, 0, 0);
+}
+.readmore:hover {
+  cursor: pointer;
+  color: #ffffff;
+}
+.feed-interactions {
+  display: flex;
+  flex-direction: column;
+}
+.ratings {
+  display: flex;
+  justify-content: space-between;
+}
+.interactions {
+  display: flex;
+  justify-content: space-between;
+}
+.feed-intr {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  /* justify-content: end; */
+  /* background-color: aquamarine; */
+}
+.intr-values {
+  align-items: flex-end;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  transition: 0.5s;
+  font-size: 15px;
+  color: hsl(125, 55%, 59%);
+  padding: 2px 10px 15px 10px;
+}
+
+.intr-values:hover {
+  align-items: center;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: rgba(12, 12, 12, 0.5);
+  width: 100%;
+  padding: 0px 0px 0px 0px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.home-feed-section {
+  text-align: center;
+}
+.ratings,
+.interactions {
+  font-size: 12px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.recipe-desc {
+  font-size: 15px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
 @media only screen and (max-width: 500px) {
   .i-motto {
     display: none;
