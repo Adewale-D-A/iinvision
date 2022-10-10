@@ -225,7 +225,7 @@ function HomeSreen() {
                     </div>
                     <div className="recipe-desc">
                       <span>use: </span>
-                      <span>this cooker cooks really well brother</span>
+                      <span>this cooker cooks really well brothes</span>
                     </div>
                     <div className="feed-readmore">
                       <div className="readmore">
