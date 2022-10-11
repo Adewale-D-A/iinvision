@@ -38,7 +38,7 @@ const EmailOTPConfirmation = () => {
         setcloseRetry("close");
         setOtpStatus("OTP Accepted");
         setOtpStatusHue("#61b15a");
-        setIconDisplay(<i class="fa-sharp fa-solid fa-check"></i>);
+        setIconDisplay(<i className="fa-sharp fa-solid fa-check"></i>);
         setOtpInstruction("redirecting to login ...");
         setTimeout(() => {
           navigate("/login", { replace: true });
@@ -48,11 +48,11 @@ const EmailOTPConfirmation = () => {
         console.log(error);
         setShowModal("");
         setcloseRetry(
-          <i class="fa-sharp fa-solid fa-arrow-rotate-left"> retry</i>
+          <i className="fa-sharp fa-solid fa-arrow-rotate-left"> retry</i>
         );
         setOtpStatus("OTP Rejected");
         setOtpStatusHue("#B20600");
-        setIconDisplay(<i class="fa-sharp fa-solid fa-xmark"></i>);
+        setIconDisplay(<i className="fa-sharp fa-solid fa-xmark"></i>);
         setOtpInstruction("OTP is invalid, please use correct OTP");
       });
   };

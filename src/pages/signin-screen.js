@@ -92,7 +92,7 @@ function LoginScreen() {
               <form onSubmit={Login}>
                 <div className="user-icon">
                   <span className="user-i">
-                    <i class="fa-solid fa-user-lock"></i>
+                    <i className="fa-solid fa-user-lock"></i>
                   </span>
                 </div>
                 <div>
@@ -125,7 +125,7 @@ function LoginScreen() {
                   <button type="submit" className="sub-btn">
                     <span className="ii-submit">
                       <span style={{ marginRight: "5px" }}>
-                        <i class="fas fa-fingerprint"></i>
+                        <i className="fas fa-fingerprint"></i>
                       </span>
                       <span>submit</span>
                     </span>

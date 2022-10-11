@@ -81,7 +81,8 @@
 .body-feed {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 }
 
 .home-feed-ctn {
@@ -160,6 +161,7 @@
 .interactions {
   display: flex;
   justify-content: space-between;
+  z-index: 9;
 }
 .feed-intr {
   position: absolute;
@@ -191,8 +193,47 @@
   justify-content: center;
   flex-direction: column;
 }
-.home-feed-section {
+.recipe-feed-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.recipe-feed-section {
+  display: flex;
+  align-items: center;
+}
+.recipe-search {
+  padding-left: 20px;
+}
+input[class="recipe-search-input"] {
+  all: unset;
+  width: 250px;
+  font-size: 15px;
+  border: 2px solid #e7f6f2;
+  border-radius: 5px 0px 0px 0px;
+  background-color: transparent;
+  padding: 10px;
+  transition: 0.5s;
+}
+button[class="search-btn"] {
+  all: unset;
   text-align: center;
+  font-size: 15px;
+  width: 30px;
+  border-radius: 0px 5px 0px 0px;
+  padding: 10px;
+  border: 2px solid #e7f6f2;
+  background-color: #448858;
+  transition: 0.5s;
+}
+button[class="search-btn"]:hover {
+  cursor: pointer;
+  /* border: 1.9px solid #448858; */
+  background-color: #ffffff;
+  color: #448858;
+}
+input[class="recipe-search-input"]:hover {
+  border: 2px solid #448858;
 }
 .ratings,
 .interactions {
@@ -203,6 +244,39 @@
   font-size: 15px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+}
+
+.liked-ic {
+  color: red;
+}
+.yet-liked {
+  transition: 0.5s;
+  margin-left: 10px;
+}
+.new-comment,
+.yet-disliked {
+  transition: 0.5s;
+}
+.yet-disliked {
+  margin-right: 10px;
+}
+.new-comment:hover {
+  cursor: pointer;
+  color: #a3f3eb;
+  transform: scale(1.5);
+}
+.yet-disliked:hover {
+  cursor: pointer;
+  color: #000000;
+  transform: scale(1.5);
+}
+.yet-liked:hover {
+  cursor: pointer;
+  color: red;
+  transform: scale(1.5);
+}
+.rated-star {
+  color: #fac213;
 }
 @media only screen and (max-width: 500px) {
   .i-motto {

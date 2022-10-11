@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useRef } from "react";
 import { motion } from "framer-motion";
 
 import "./pagesCss/home-screen.css";
@@ -14,6 +14,16 @@ function HomeSreen() {
   // const handleMouse = (e) => {
   //   console.log(e.clientX, e.clientY, e.pageX, e.pageY, e.screenX, e.screenY);
   // };
+  const liked = useRef();
+  const disliked = useRef();
+  const Bigger = useRef();
+  const LikedItem = () => {
+    liked.current.style.color = "red";
+  };
+
+  const DislikeItem = () => {
+    disliked.current.style.color = "black";
+  };
 
   return (
     <>
@@ -72,8 +82,22 @@ function HomeSreen() {
               />
             </div>
             <div className="body-feed">
-              <div className="home-feed-section">
-                <h2>Top Recipe of the week</h2>
+              <div className="recipe-feed-list">
+                <div className="recipe-feed-section">
+                  <div>
+                    <h2>Recipes</h2>
+                  </div>
+                  <div className="recipe-search">
+                    <input
+                      type="text"
+                      placeHolder="search your favourite recipe"
+                      className="recipe-search-input"
+                    />
+                    <button className="search-btn">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
               <div className="home-feed-ctn">
                 <div className="home-feed-items">
@@ -85,16 +109,25 @@ function HomeSreen() {
                       </div>
                       <div className="intr-values">
                         <div>
-                          <span>8k</span>
+                          <span>
+                            8k <i className="fa-solid fa-heart liked-ic"></i>
+                          </span>
                         </div>
                         <div>
-                          <span>2</span>
+                          <span>
+                            2 <i className="fa-solid fa-comment"></i>
+                          </span>
                         </div>
                         <div>
-                          <span>5 star</span>
+                          <span>
+                            5 <i className="fa-solid fa-star rated-star"></i>
+                          </span>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div>
+                    <span>Pizza Recipe</span>
                   </div>
                   <div className="feed-intr-items">
                     <div className="feed-interactions">
@@ -103,13 +136,25 @@ function HomeSreen() {
                           <span>rate recipe:</span>
                         </div>
                         <div>
-                          <span>stars</span>
+                          <span>
+                            <i className="fa-solid fa-star"></i>
+                            <i className="fa-solid fa-star"></i>
+                            <i className="fa-solid fa-star"></i>
+                            <i className="fa-solid fa-star"></i>
+                            <i className="fa-solid fa-star"></i>
+                          </span>
                         </div>
                       </div>
                       <div className="interactions">
-                        <span>like</span>
-                        <span>comment(0)</span>
-                        <span>dislike</span>
+                        <span onClick={(e) => LikedItem()} ref={liked}>
+                          <i className="fa-solid fa-heart yet-liked"></i>
+                        </span>
+                        <span>
+                          <i className="fa-solid fa-comment new-comment"></i>
+                        </span>
+                        <span onClick={(e) => DislikeItem()} ref={disliked}>
+                          <i className="fa-solid fa-thumbs-down yet-disliked"></i>
+                        </span>
                       </div>
                     </div>
                     <div className="recipe-desc">
@@ -130,7 +175,7 @@ function HomeSreen() {
             </div>
             <div className="body-feed">
               <div className="home-feed-section">
-                <h2>Top cooking utensils of the week</h2>
+                <h2>Top Chef'ng Tools</h2>
               </div>
               <div className="home-feed-ctn">
                 <div className="home-feed-items">
@@ -184,7 +229,7 @@ function HomeSreen() {
             </div>
             <div className="body-feed">
               <div className="home-feed-section">
-                <h2>Cooking hacks</h2>
+                <h2>Best Cooking Hacks</h2>
               </div>
               <div className="home-feed-ctn">
                 <div className="home-feed-items">
