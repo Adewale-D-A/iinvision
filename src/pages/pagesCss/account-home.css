@@ -17,6 +17,7 @@ main[class="user-home"] {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .toast-pop {
   font-size: 12px;
