@@ -27,7 +27,7 @@ main[class="user-home"] {
   border-radius: 10px;
   padding: 3px;
 }
-textarea[class="upload-descriptor"] {
+/* textarea[class="upload-descriptor"] {
   all: unset;
   background-color: #525252;
   color: #ffffff;
@@ -39,7 +39,7 @@ textarea[class="upload-descriptor"] {
   padding: 10px 10px 10px 20px;
   width: 100%;
   height: 100px;
-}
+} */
 .description-input {
   width: 70vw;
   display: flex;
@@ -176,6 +176,71 @@ button[class="feed-smt-btn"]:hover {
 .feed-desc {
   font-size: 15px;
   margin-left: 10px;
+}
+
+/* //receipe input steps */
+form[class="input-form"] {
+  width: 100%;
+}
+input[class="recepe-input"] {
+  all: unset;
+  text-align: left;
+  background-color: azure;
+  width: 100%;
+  height: 50px;
+  color: #000000;
+  font-size: 15px;
+  padding: 5px 5px 5px 10px;
+}
+button[class="add-btn"] {
+  all: unset;
+  height: 50px;
+  width: 20%;
+  background-color: #448858;
+  font-size: 15px;
+  transition: 0.5s;
+  padding: 5px 5px 5px 10px;
+}
+button[class="add-btn"]:hover {
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #448858;
+}
+.text-addbtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.trash-splice,
+.edit-splice {
+  transition: 0.5s;
+  position: absolute;
+}
+.trash-splice {
+  margin-left: 10px;
+}
+.edit-splice {
+  margin-left: 30px;
+}
+.trash-splice:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+  color: #f95959;
+}
+.edit-splice:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+  color: #d3e785;
+}
+.recipe-steps {
+  padding: 0px 50px 0px 0px;
+}
+.recipe-list-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (max-width: 500px) {

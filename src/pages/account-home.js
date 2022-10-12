@@ -1,6 +1,6 @@
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import Cookies from "universal-cookie";
 import TopBar from "../components/top-bar";
 import "./pagesCss/account-home.css";
@@ -22,6 +22,12 @@ export const formatDate = (dateString) => {
 };
 
 const AccountHome = () => {
+  const add_edit = useRef();
+
+  const [stepsInput, setStepsInput] = useState("");
+  const [recipeList, setRecipeList] = useState([]);
+  const [editPos, setEditPos] = useState();
+
   // useEffect(() => {
   //   console.log(process.env.REACT_APP_UPLOAD_BACKEND_URL);
   // }, []);
@@ -39,7 +45,7 @@ const AccountHome = () => {
   const username = cookies.get("username");
   const Accesstoken = cookies.get("uz96_o");
 
-  const [description, setDescription] = useState("");
+  // const [description, setDescription] = useState("");
   const [mediaUpload, setMediaUpload] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [resData, setResData] = useState([]);
@@ -54,14 +60,14 @@ const AccountHome = () => {
     });
   }, [toastFormat]);
 
-  const UploadInProgress = useCallback(() => {
-    toast.info(`upload in progress ...`, {
-      position: "top-right",
-      autoClose: 2000,
-      limit: 2,
-      ...toastFormat,
-    });
-  }, [toastFormat]);
+  // const UploadInProgress = useCallback(() => {
+  //   toast.info(`upload in progress ...`, {
+  //     position: "top-right",
+  //     autoClose: 2000,
+  //     limit: 2,
+  //     ...toastFormat,
+  //   });
+  // }, [toastFormat]);
 
   const UploadSuccess = useCallback(() => {
     toast.success("Post Updated", {
@@ -137,10 +143,10 @@ const AccountHome = () => {
     (e) => {
       e.preventDefault();
       let fileUpload = new FormData();
-      fileUpload.append("itemDescription", description);
+      fileUpload.append("itemDescription", recipeList);
       fileUpload.append("mediaUpload", mediaUpload[0]);
 
-      if (description && mediaUpload[0]) {
+      if (recipeList && mediaUpload[0]) {
         setFileLoader("");
         axios
           .put(
@@ -162,7 +168,7 @@ const AccountHome = () => {
           .then((response) => {
             UploadSuccess();
             setFileLoader("none");
-            setDescription("");
+            setStepsInput([]);
             setFileChosen("No file chosen");
             document.querySelector("#result").style.display = "none";
             getAllPost();
@@ -189,10 +195,9 @@ const AccountHome = () => {
       }
     },
     [
-      description,
+      recipeList,
       mediaUpload,
       UploadFailed,
-      UploadInProgress,
       UploadSuccess,
       UserTokenFailed,
       WarnUser,
@@ -253,6 +258,35 @@ const AccountHome = () => {
     }
   });
 
+  const addInput = (e) => {
+    e.preventDefault();
+    if (
+      add_edit?.current.innerHTML ===
+      'add this step <i class="fa-solid fa-check"></i>'
+    ) {
+      setRecipeList([...recipeList, stepsInput]);
+      setStepsInput("");
+    } else {
+      recipeList.splice(editPos, 1, stepsInput);
+      setRecipeList([...recipeList]);
+      add_edit.current.innerHTML =
+        'add this step <i class="fa-solid fa-check"></i>';
+      setStepsInput("");
+    }
+  };
+
+  const removeItem = (item) => {
+    recipeList.splice(recipeList.indexOf(item), 1);
+    setRecipeList([...recipeList]);
+  };
+
+  const editItem = (item) => {
+    setEditPos(recipeList.indexOf(item));
+    setStepsInput(`${item}`);
+    add_edit.current.innerHTML =
+      'add edited step <i class="fa-solid fa-pen-nib"></i>';
+  };
+
   return (
     <>
       <motion.div
@@ -291,14 +325,33 @@ const AccountHome = () => {
               encType="multipart/form-data"
             >
               <div className="description-input">
-                <textarea
+                <form className="input-form">
+                  <div className="text-addbtn">
+                    <input
+                      placeHolder="Add recipe steps"
+                      type="text"
+                      className="recepe-input"
+                      value={stepsInput}
+                      onChange={(e) => setStepsInput(e.target.value)}
+                    />{" "}
+                    <button
+                      onClick={(e) => addInput(e)}
+                      className="add-btn"
+                      ref={add_edit}
+                      type="submit"
+                    >
+                      add this step <i class="fa-solid fa-check"></i>
+                    </button>
+                  </div>
+                </form>
+                {/* <textarea
                   className="upload-descriptor"
                   type="text"
                   placeholder="what do you have for us today?"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   name="description"
-                />
+                /> */}
                 <div className="output-thumbnail">
                   <output id="result" />
                 </div>
@@ -333,6 +386,33 @@ const AccountHome = () => {
                 <span>{uploadProgress}%</span>
               </div>
             </form>
+          </div>
+          <div className="recipe-list-flex">
+            {recipeList.map((item) => {
+              return (
+                <div key={item} className="recipe-steps">
+                  <ul>
+                    <li>
+                      {item}{" "}
+                      <span
+                        onClick={() => removeItem(item)}
+                        className="trash-splice"
+                        title="delete item"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </span>
+                      <span
+                        onClick={() => editItem(item)}
+                        className="edit-splice"
+                        title="edit item"
+                      >
+                        <i class="fa-solid fa-pen-nib"></i>
+                      </span>
+                    </li>{" "}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
           <div className="feeds-items">
             {resData

@@ -105,6 +105,10 @@
   height: auto;
   position: absolute;
 }
+.home-feed-img {
+  width: 100%;
+  height: auto;
+}
 .price-tag {
   position: absolute;
   text-align: end;
@@ -209,10 +213,10 @@ input[class="recipe-search-input"] {
   all: unset;
   width: 250px;
   font-size: 15px;
-  border: 2px solid #e7f6f2;
+  border: 1px solid #e7f6f2;
   border-radius: 5px 0px 0px 0px;
   background-color: transparent;
-  padding: 10px;
+  padding: 5px 5px 5px 10px;
   transition: 0.5s;
 }
 button[class="search-btn"] {
@@ -221,8 +225,8 @@ button[class="search-btn"] {
   font-size: 15px;
   width: 30px;
   border-radius: 0px 5px 0px 0px;
-  padding: 10px;
-  border: 2px solid #e7f6f2;
+  padding: 5px 5px 5px 10px;
+  border: 1px solid #e7f6f2;
   background-color: #448858;
   transition: 0.5s;
 }
@@ -277,6 +281,10 @@ input[class="recipe-search-input"]:hover {
 }
 .rated-star {
   color: #fac213;
+}
+.recipe-steps {
+  font-size: 15px;
+  font-family: "Times New Roman", Times, serif;
 }
 @media only screen and (max-width: 500px) {
   .i-motto {

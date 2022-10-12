@@ -1,12 +1,16 @@
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import "./pagesCss/home-screen.css";
 import { Link } from "react-router-dom";
 import pizzaSlice1 from "../staticAssets/pizza_display_1.jpg";
 import pizzaSlice2 from "../staticAssets/pizza_display_2.jpg";
+import imageLoader from "../staticAssets/loader.gif";
 import LandingScreen from "./landing-screen";
 import piz from "../staticSample/pizza_display.jpg";
+
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "./pagesCss/black-and-white.css";
 
 function HomeSreen() {
   // const [clientX, setClientX] = useState("");
@@ -16,13 +20,50 @@ function HomeSreen() {
   // };
   const liked = useRef();
   const disliked = useRef();
-  const Bigger = useRef();
+  const add_edit = useRef();
+
   const LikedItem = () => {
     liked.current.style.color = "red";
   };
 
   const DislikeItem = () => {
     disliked.current.style.color = "black";
+  };
+
+  const [stepsInput, setStepsInput] = useState("");
+  const [recipeList, setRecipeList] = useState([]);
+  const [editPos, setEditPos] = useState();
+
+  const addInput = () => {
+    if (
+      add_edit?.current.innerHTML ===
+      'add this step <i class="fa-solid fa-check"></i>'
+    ) {
+      setRecipeList([...recipeList, stepsInput]);
+      setStepsInput("");
+    } else {
+      recipeList.splice(editPos, 1, stepsInput);
+      setRecipeList([...recipeList]);
+      add_edit.current.innerHTML =
+        'add this step <i class="fa-solid fa-check"></i>';
+      setStepsInput("");
+    }
+  };
+
+  const consoleLog = () => {
+    console.log(recipeList);
+  };
+
+  const removeItem = (item) => {
+    recipeList.splice(recipeList.indexOf(item), 1);
+    setRecipeList([...recipeList]);
+  };
+
+  const editItem = (item) => {
+    setEditPos(recipeList.indexOf(item));
+    setStepsInput(`${item}`);
+    add_edit.current.innerHTML =
+      'add edited step <i class="fa-solid fa-pen-nib"></i>';
   };
 
   return (
@@ -102,7 +143,17 @@ function HomeSreen() {
               <div className="home-feed-ctn">
                 <div className="home-feed-items">
                   <div className="img-ctn-feed">
-                    <img src={piz} alt="" className="feed-ctn" />
+                    <div className="feed-ctn">
+                      <LazyLoadImage
+                        src={piz}
+                        placeholderSrc={imageLoader}
+                        alt=""
+                        effect="black-and-white"
+                        loading="lazy"
+                        className="home-feed-img"
+                      />
+                    </div>
+                    {/* <img src={piz} alt="" className="feed-ctn" /> */}
                     <div className="feed-intr">
                       <div className="price-tag">
                         <span className="item-price">$10</span>
@@ -283,6 +334,46 @@ function HomeSreen() {
             </div>
           </main>
           <footer>
+            {recipeList.map((item) => {
+              return (
+                <div key={item} className="recipe-steps">
+                  <ul>
+                    <li>
+                      {item}{" "}
+                      <span
+                        onClick={() => removeItem(item)}
+                        className="trash-splice"
+                        title="delete item"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </span>
+                      <span
+                        onClick={() => editItem(item)}
+                        className="edit-splice"
+                        title="edit item"
+                      >
+                        <i class="fa-solid fa-pen-nib"></i>
+                      </span>
+                    </li>{" "}
+                  </ul>
+                </div>
+              );
+            })}
+            <input
+              placeHolder="Add recipe steps"
+              type="text"
+              className="recepe-input"
+              value={stepsInput}
+              onChange={(e) => setStepsInput(e.target.value)}
+            />
+            <button
+              onClick={(e) => addInput()}
+              className="add-btn"
+              ref={add_edit}
+            >
+              add this step <i class="fa-solid fa-check"></i>
+            </button>
+            <button onClick={(e) => consoleLog()}>console</button>
             <h1>Footer</h1>
           </footer>
         </motion.div>
