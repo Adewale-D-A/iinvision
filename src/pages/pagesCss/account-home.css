@@ -22,10 +22,26 @@ main[class="user-home"] {
 .toast-pop {
   font-size: 12px;
 }
+.img-thumnail-ctn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.trash-thumbnail {
+  position: absolute;
+  font-size: 30px;
+  transition: 0.5s;
+  color: hsl(0, 0%, 0%, 0.7);
+}
+.trash-thumbnail:hover {
+  cursor: pointer;
+  transform: scale(2);
+}
 .thumbnail {
   height: 100px;
   border-radius: 10px;
-  padding: 3px;
+  padding: 3px 0px 3px 3px;
 }
 /* textarea[class="upload-descriptor"] {
   all: unset;
@@ -82,6 +98,7 @@ main[class="user-home"] {
   cursor: pointer;
   margin-top: 1rem;
   font-size: 15px;
+  width: 100%;
 }
 button[class="feed-smt-btn"] {
   all: unset;
@@ -91,8 +108,21 @@ button[class="feed-smt-btn"] {
   text-align: center;
   margin: 10px;
   font-size: 15px;
+  width: 100%;
   box-shadow: inset 0 0 25px rgba(12, 1, 31, 0.7), 0 0 30px rgb(0 0 0 / 20%);
   background: url("../../staticAssets/noise-10.png");
+}
+.upload-user-media {
+  width: 50%;
+}
+.submit-feed-btn {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner-sbt-btn {
+  width: 100%;
 }
 .choose-file:hover,
 button[class="feed-smt-btn"]:hover {
@@ -102,6 +132,11 @@ button[class="feed-smt-btn"]:hover {
 }
 .upload-sub-btn {
   width: 70vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  /* margin-top: 15px; */
 }
 /* starting of feeds items styling */
 .feeds-items {
@@ -177,6 +212,9 @@ button[class="feed-smt-btn"]:hover {
   font-size: 15px;
   margin-left: 10px;
 }
+.output-thumbnail {
+  position: relative;
+}
 
 /* //receipe input steps */
 form[class="input-form"] {
@@ -203,7 +241,7 @@ button[class="add-btn"] {
 }
 button[class="add-btn"]:hover {
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: azure;
   color: #448858;
 }
 .text-addbtn {
@@ -226,7 +264,7 @@ button[class="add-btn"]:hover {
 .trash-splice:hover {
   transform: scale(1.5);
   cursor: pointer;
-  color: #f95959;
+  color: #000000;
 }
 .edit-splice:hover {
   transform: scale(1.5);
@@ -234,15 +272,25 @@ button[class="add-btn"]:hover {
   color: #d3e785;
 }
 .recipe-steps {
-  padding: 0px 50px 0px 0px;
+  padding: 5px 50px 5px 0px;
 }
 .recipe-list-flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  text-align: left;
+  background-color: #eb5353;
+  scrollbar-color: #fff #eb5353;
+  scrollbar-width: thin;
 }
-
+.recipe-list-flex::-webkit-scrollbar {
+  width: 6px;
+  background-color: #eb5353;
+}
+.recipe-list-flex::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+}
 @media only screen and (max-width: 500px) {
   .feeds-items {
     display: flex;
@@ -286,5 +334,25 @@ button[class="add-btn"]:hover {
     width: 300px;
     height: 100%;
     transition: 1s ease-out;
+  }
+  .recipe-list-flex {
+    max-height: 150px;
+  }
+  .upload-sub-btn {
+    margin-top: 20px;
+    width: 70vw;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .upload-user-media {
+    width: 100%;
+  }
+  .submit-feed-btn {
+    width: 80%;
+    margin-top: 5px;
+    margin-right: 15%;
+  }
+  .choose-file {
+    font-size: 12px;
   }
 }

@@ -6,19 +6,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  scrollbar-color: #282c34 #aaa9a9 !important;
+  scrollbar-width: thin !important;
   /* background-color: var(--darkmode); */
 }
 body::-webkit-scrollbar {
   height: 7px;
   width: 7px;
   background: #282c34;
-  -webkit-border-radius: 1ex;
 }
 
 body::-webkit-scrollbar-thumb {
   background: #aaa9a9;
-  -webkit-border-radius: 1ex;
 }
 
 body::-webkit-scrollbar-corner {

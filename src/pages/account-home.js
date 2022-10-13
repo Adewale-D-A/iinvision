@@ -209,9 +209,15 @@ const AccountHome = () => {
   const checkUpload = (e) => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       const hideThumbnail = document.getElementsByClassName("thumbnail");
+      const thumbnailTrash = document.getElementsByClassName("thumbnail-trash");
       if (hideThumbnail.length > 0) {
         for (let i = 0; i < hideThumbnail.length; i++) {
           hideThumbnail[i].style.display = "none";
+        }
+      }
+      if (thumbnailTrash.length > 0) {
+        for (let i = 0; i < thumbnailTrash.length; i++) {
+          thumbnailTrash[i].style.display = "none";
         }
       }
 
@@ -228,7 +234,7 @@ const AccountHome = () => {
           });
 
           const div = document.createElement("div");
-          div.innerHTML = `<img class="thumbnail" src="${filesData.preview}" title="${filesData.name}" alt="${filesData.name}"/>`;
+          div.innerHTML = `<div class="img-thumnail-ctn"><img class="thumbnail" src="${filesData.preview}" title="${filesData.name}" alt="${filesData.name}"/> <span class="trash-thumbnail"><i class="fa-solid fa-trash thumbnail-trash"></i></span></div>`;
           output.appendChild(div);
         } else if (files[0].type.match("video")) {
           const filesData = e.target.files[0];
@@ -287,6 +293,22 @@ const AccountHome = () => {
       'add edited step <i class="fa-solid fa-pen-nib"></i>';
   };
 
+  const trashThumbnail = () => {
+    setFileChosen("No file chosen");
+    const hideThumbnail = document.getElementsByClassName("thumbnail");
+    const thumbnailTrash = document.getElementsByClassName("thumbnail-trash");
+    if (hideThumbnail.length > 0) {
+      for (let i = 0; i < hideThumbnail.length; i++) {
+        hideThumbnail[i].style.display = "none";
+      }
+    }
+    if (thumbnailTrash.length > 0) {
+      for (let i = 0; i < thumbnailTrash.length; i++) {
+        thumbnailTrash[i].style.display = "none";
+      }
+    }
+  };
+
   return (
     <>
       <motion.div
@@ -318,7 +340,7 @@ const AccountHome = () => {
           />
         </div>
         <main className="user-home">
-          <div>
+          <div className="user-feed-upload-container">
             <form
               onSubmit={PushUpload}
               method="post"
@@ -353,67 +375,72 @@ const AccountHome = () => {
                   name="description"
                 /> */}
                 <div className="output-thumbnail">
-                  <output id="result" />
+                  <output id="result" onClick={() => trashThumbnail()} />
                 </div>
               </div>
+
               <div
                 className="load-upload"
                 style={{ display: fileLoader }}
               ></div>
+              <div className="recipe-list-flex">
+                <ol>
+                  {recipeList.map((item) => {
+                    return (
+                      <li key={item} className="recipe-steps">
+                        <span>{item}</span>
+                        <span
+                          onClick={() => removeItem(item)}
+                          className="trash-splice"
+                          title="delete item"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </span>
+                        <span
+                          onClick={() => editItem(item)}
+                          className="edit-splice"
+                          title="edit item"
+                        >
+                          <i class="fa-solid fa-pen-nib"></i>
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
               <div className="upload-sub-btn">
-                <label htmlFor="files" className="choose-file">
-                  Upload Media <i class="fa-solid fa-paperclip"></i>
-                  {" ("}
-                  {fileChosen}
-                  {")"}
-                </label>
-                <div className="hide-file-upload-btn">
-                  <input
-                    type="file"
-                    id="files"
-                    accept="image/jpg, image/png, image/jpeg, image/gif, image/tiff, image/bmp, video/mp4"
-                    onChange={(e) => checkUpload(e)}
-                  />
+                <div className="upload-user-media">
+                  <label htmlFor="files" className="choose-file">
+                    Upload Media <i class="fa-solid fa-paperclip"></i>
+                    {" ("}
+                    {fileChosen}
+                    {")"}
+                  </label>
+                  <div className="hide-file-upload-btn">
+                    <input
+                      type="file"
+                      id="files"
+                      accept="image/jpg, image/png, image/jpeg, image/gif, image/tiff, image/bmp, video/mp4"
+                      onChange={(e) => checkUpload(e)}
+                    />
+                  </div>
                 </div>
-                <motion.button
-                  type="submit"
-                  className="feed-smt-btn"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  post
-                </motion.button>
-                <span>{uploadProgress}%</span>
+                <div className="submit-feed-btn">
+                  <div className="inner-sbt-btn">
+                    <motion.button
+                      type="submit"
+                      className="feed-smt-btn"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      post <span>{uploadProgress}%</span>
+                    </motion.button>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
-          <div className="recipe-list-flex">
-            {recipeList.map((item) => {
-              return (
-                <div key={item} className="recipe-steps">
-                  <ul>
-                    <li>
-                      {item}{" "}
-                      <span
-                        onClick={() => removeItem(item)}
-                        className="trash-splice"
-                        title="delete item"
-                      >
-                        <i class="fa-solid fa-trash"></i>
-                      </span>
-                      <span
-                        onClick={() => editItem(item)}
-                        className="edit-splice"
-                        title="edit item"
-                      >
-                        <i class="fa-solid fa-pen-nib"></i>
-                      </span>
-                    </li>{" "}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
+
           <div className="feeds-items">
             {resData
               .sort(

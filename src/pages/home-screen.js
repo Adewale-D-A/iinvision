@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useState } from "react";
+import React, { Suspense, useRef } from "react";
 import { motion } from "framer-motion";
 
 import "./pagesCss/home-screen.css";
@@ -20,7 +20,6 @@ function HomeSreen() {
   // };
   const liked = useRef();
   const disliked = useRef();
-  const add_edit = useRef();
 
   const LikedItem = () => {
     liked.current.style.color = "red";
@@ -28,42 +27,6 @@ function HomeSreen() {
 
   const DislikeItem = () => {
     disliked.current.style.color = "black";
-  };
-
-  const [stepsInput, setStepsInput] = useState("");
-  const [recipeList, setRecipeList] = useState([]);
-  const [editPos, setEditPos] = useState();
-
-  const addInput = () => {
-    if (
-      add_edit?.current.innerHTML ===
-      'add this step <i class="fa-solid fa-check"></i>'
-    ) {
-      setRecipeList([...recipeList, stepsInput]);
-      setStepsInput("");
-    } else {
-      recipeList.splice(editPos, 1, stepsInput);
-      setRecipeList([...recipeList]);
-      add_edit.current.innerHTML =
-        'add this step <i class="fa-solid fa-check"></i>';
-      setStepsInput("");
-    }
-  };
-
-  const consoleLog = () => {
-    console.log(recipeList);
-  };
-
-  const removeItem = (item) => {
-    recipeList.splice(recipeList.indexOf(item), 1);
-    setRecipeList([...recipeList]);
-  };
-
-  const editItem = (item) => {
-    setEditPos(recipeList.indexOf(item));
-    setStepsInput(`${item}`);
-    add_edit.current.innerHTML =
-      'add edited step <i class="fa-solid fa-pen-nib"></i>';
   };
 
   return (
@@ -334,46 +297,6 @@ function HomeSreen() {
             </div>
           </main>
           <footer>
-            {recipeList.map((item) => {
-              return (
-                <div key={item} className="recipe-steps">
-                  <ul>
-                    <li>
-                      {item}{" "}
-                      <span
-                        onClick={() => removeItem(item)}
-                        className="trash-splice"
-                        title="delete item"
-                      >
-                        <i class="fa-solid fa-trash"></i>
-                      </span>
-                      <span
-                        onClick={() => editItem(item)}
-                        className="edit-splice"
-                        title="edit item"
-                      >
-                        <i class="fa-solid fa-pen-nib"></i>
-                      </span>
-                    </li>{" "}
-                  </ul>
-                </div>
-              );
-            })}
-            <input
-              placeHolder="Add recipe steps"
-              type="text"
-              className="recepe-input"
-              value={stepsInput}
-              onChange={(e) => setStepsInput(e.target.value)}
-            />
-            <button
-              onClick={(e) => addInput()}
-              className="add-btn"
-              ref={add_edit}
-            >
-              add this step <i class="fa-solid fa-check"></i>
-            </button>
-            <button onClick={(e) => consoleLog()}>console</button>
             <h1>Footer</h1>
           </footer>
         </motion.div>
