@@ -394,7 +394,7 @@ const AccountHome = () => {
                   </label>
                   <input
                     type="text"
-                    placeHolder="Upload Title"
+                    placeholder="Upload Title"
                     className="upload-title"
                     id="upload-title"
                     value={uploadTitle}
@@ -407,7 +407,7 @@ const AccountHome = () => {
                   </label>
                   <input
                     type="number"
-                    placeHolder="item price"
+                    placeholder="item price"
                     className="upload-price"
                     id="upload-price"
                     value={uploadPrice}
@@ -419,7 +419,7 @@ const AccountHome = () => {
                 <form className="add-from">
                   <div className="text-addbtn">
                     <input
-                      placeHolder="Add recipe steps"
+                      placeholder="Add recipe steps"
                       type="text"
                       className="recepe-input"
                       value={stepsInput}
