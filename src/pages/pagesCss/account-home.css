@@ -313,6 +313,7 @@ button[class="add-btn"]:hover {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-items: center;
   margin-bottom: 5px;
 }
 .upload-item-label {
@@ -360,6 +361,13 @@ input[class="upload-title"] {
 }
 .reverseArrow-class {
   margin-left: 10px;
+}
+.radion-btn-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  margin: 0px 10px 0px 10px;
 }
 @media only screen and (max-width: 1000px) {
   .title-ctn,
@@ -452,7 +460,12 @@ input[class="upload-title"] {
   .title-ctn,
   .price-ctn {
     margin: 2px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
+
   .input-form {
     flex-wrap: wrap;
   }

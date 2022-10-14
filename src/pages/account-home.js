@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+import "./pagesCss/blur.css";
 
 export const formatDate = (dateString) => {
   const options = {
@@ -35,6 +35,7 @@ const AccountHome = () => {
   const [recipeList, setRecipeList] = useState([]);
   const [uploadTitle, setUploadTitle] = useState("");
   const [uploadPrice, setUploadPrice] = useState();
+  const [uploadType, setUploadType] = useState("recipe");
   // useEffect(() => {
   //   console.log(process.env.REACT_APP_UPLOAD_BACKEND_URL);
   // }, []);
@@ -159,6 +160,7 @@ const AccountHome = () => {
       fileUpload.append("mediaUpload", mediaUpload[0]);
       fileUpload.append("uploadTitle", uploadTitle);
       fileUpload.append("uploadPrice", uploadPrice);
+      fileUpload.append("uploadType", uploadType);
 
       if (recipeList && mediaUpload[0]) {
         setFileLoader("");
@@ -213,6 +215,7 @@ const AccountHome = () => {
       mediaUpload,
       uploadPrice,
       uploadTitle,
+      uploadType,
       UploadFailed,
       UploadSuccess,
       UserTokenFailed,
@@ -339,6 +342,7 @@ const AccountHome = () => {
       changeClickAread.current.innerHTML = "<h4>Hide Upload Dock</h4>";
     }
   };
+
   return (
     <>
       <motion.div
@@ -400,6 +404,38 @@ const AccountHome = () => {
                     value={uploadTitle}
                     onChange={(e) => setUploadTitle(e.target.value)}
                   />
+                </div>
+                <div className="radion-btn-ctn title-ctn">
+                  <div>
+                    <span>Upload type:</span>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      name="type-rd-btn"
+                      value="recipe"
+                      id="recipe-radio"
+                      defaultChecked
+                      onChange={(e) => setUploadType(e.target.value)}
+                    />
+                    <label htmlFor="recipe-radio">Recipe</label>
+                    <input
+                      type="radio"
+                      name="type-rd-btn"
+                      value="kitchenware"
+                      id="kitchenware-radio"
+                      onChange={(e) => setUploadType(e.target.value)}
+                    />
+                    <label htmlFor="kitchenware-radio">Kitchen Ware</label>
+                    <input
+                      type="radio"
+                      name="type-rd-btn"
+                      value="kitchenhack"
+                      id="kitchenhack-radio"
+                      onChange={(e) => setUploadType(e.target.value)}
+                    />
+                    <label htmlFor="kitchenhack-radio">Kitchen Hack</label>
+                  </div>
                 </div>
                 <div className="price-ctn">
                   <label htmlFor="upload-price" className="upload-item-label">

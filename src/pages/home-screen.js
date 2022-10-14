@@ -5,12 +5,11 @@ import "./pagesCss/home-screen.css";
 import { Link } from "react-router-dom";
 import pizzaSlice1 from "../staticAssets/pizza_display_1.jpg";
 import pizzaSlice2 from "../staticAssets/pizza_display_2.jpg";
-import imageLoader from "../staticAssets/loader.gif";
 import LandingScreen from "./landing-screen";
 import piz from "../staticSample/pizza_display.jpg";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import "./pagesCss/black-and-white.css";
+import "./pagesCss/blur.css";
 
 function HomeSreen() {
   // const [clientX, setClientX] = useState("");
@@ -111,9 +110,9 @@ function HomeSreen() {
                     <div className="feed-ctn">
                       <LazyLoadImage
                         src={piz}
-                        placeholderSrc={imageLoader}
+                        placeholderSrc={piz}
                         alt=""
-                        effect="black-and-white"
+                        effect="blur"
                         loading="lazy"
                         className="home-feed-img"
                       />
