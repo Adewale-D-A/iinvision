@@ -60,16 +60,20 @@
 .img-ctn {
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(rgb(114, 80, 80), rgb(255, 145, 0));
+  background-image: linear-gradient(rgb(189, 40, 40), rgb(30, 90, 180));
   justify-content: center;
   align-items: center;
   height: 80vh;
   position: relative;
   overflow: hidden;
+  transition: 1s;
 }
 .dash-text {
   position: absolute;
-  top: 25vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: DS-rg;
 }
 .piza_home {
@@ -205,6 +209,8 @@
 .recipe-feed-section {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .recipe-search {
   padding-left: 20px;
@@ -286,8 +292,19 @@ input[class="recipe-search-input"]:hover {
   font-size: 15px;
   font-family: "Times New Roman", Times, serif;
 }
+@media only screen and (max-width: 1000px) {
+  .img-ctn {
+    height: 100%;
+  }
+  .recipe-search {
+    padding-left: 10px;
+  }
+}
 @media only screen and (max-width: 500px) {
   .i-motto {
     display: none;
+  }
+  .recipe-search {
+    padding-left: 0px;
   }
 }

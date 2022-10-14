@@ -23,11 +23,18 @@ export const formatDate = (dateString) => {
 
 const AccountHome = () => {
   const add_edit = useRef();
+  const uploadref = useRef();
+  const changeClickAread = useRef();
+  const reverseArrow = useRef();
 
   const [stepsInput, setStepsInput] = useState("");
-  const [recipeList, setRecipeList] = useState([]);
   const [editPos, setEditPos] = useState();
 
+  //upload to backend
+  const [mediaUpload, setMediaUpload] = useState("");
+  const [recipeList, setRecipeList] = useState([]);
+  const [uploadTitle, setUploadTitle] = useState("");
+  const [uploadPrice, setUploadPrice] = useState();
   // useEffect(() => {
   //   console.log(process.env.REACT_APP_UPLOAD_BACKEND_URL);
   // }, []);
@@ -46,7 +53,6 @@ const AccountHome = () => {
   const Accesstoken = cookies.get("uz96_o");
 
   // const [description, setDescription] = useState("");
-  const [mediaUpload, setMediaUpload] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [resData, setResData] = useState([]);
   const [fileChosen, setFileChosen] = useState("No file chosen");
@@ -119,9 +125,9 @@ const AccountHome = () => {
         GetAll();
       })
       .catch((error) => {
-        if (error.response.data?.message) {
+        if (error?.response?.data?.message) {
           if (
-            error.response.data?.message ===
+            error?.response?.data?.message ===
             "please log in, your access credentials has expired"
           ) {
             UserTokenFailed(error.response.data?.message);
@@ -129,11 +135,17 @@ const AccountHome = () => {
             UploadFailed(error.response.data?.message);
           }
         }
-        if (error.message === "Network Error") {
+        if (error?.message === "Network Error") {
           UploadFailed(error.message);
         }
       });
   }, [GetAll, UploadFailed, UserTokenFailed, Accesstoken]);
+
+  useEffect(() => {
+    reverseArrow.current.style.rotate = "0deg";
+    uploadref.current.style.display = "none";
+    changeClickAread.current.innerHTML = "<h4>Open Upload Dock</h4>";
+  }, []);
 
   useEffect(() => {
     getAllPost();
@@ -145,6 +157,8 @@ const AccountHome = () => {
       let fileUpload = new FormData();
       fileUpload.append("itemDescription", recipeList);
       fileUpload.append("mediaUpload", mediaUpload[0]);
+      fileUpload.append("uploadTitle", uploadTitle);
+      fileUpload.append("uploadPrice", uploadPrice);
 
       if (recipeList && mediaUpload[0]) {
         setFileLoader("");
@@ -197,6 +211,8 @@ const AccountHome = () => {
     [
       recipeList,
       mediaUpload,
+      uploadPrice,
+      uploadTitle,
       UploadFailed,
       UploadSuccess,
       UserTokenFailed,
@@ -309,6 +325,20 @@ const AccountHome = () => {
     }
   };
 
+  const [hideUpload, setHideUpload] = useState(true);
+
+  const ClickUpload = () => {
+    setHideUpload(!hideUpload);
+    if (!hideUpload) {
+      reverseArrow.current.style.rotate = "0deg";
+      uploadref.current.style.display = "none";
+      changeClickAread.current.innerHTML = "<h4>Open Upload Dock</h4>";
+    } else {
+      uploadref.current.style.display = "";
+      reverseArrow.current.style.rotate = "180deg";
+      changeClickAread.current.innerHTML = "<h4>Hide Upload Dock</h4>";
+    }
+  };
   return (
     <>
       <motion.div
@@ -340,14 +370,53 @@ const AccountHome = () => {
           />
         </div>
         <main className="user-home">
-          <div className="user-feed-upload-container">
-            <form
+          <div className="click-to-display" onClick={() => ClickUpload()}>
+            <div>
+              <span ref={changeClickAread}>
+                <h4>Open Upload Dock</h4>
+              </span>
+            </div>
+            <div className="reverseArrow-class">
+              <i ref={reverseArrow} class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+          <div className="user-feed-upload-container" ref={uploadref}>
+            {/* <form
               onSubmit={PushUpload}
               method="post"
               encType="multipart/form-data"
-            >
-              <div className="description-input">
-                <form className="input-form">
+            > */}
+            <div className="description-input">
+              <div className="title-price">
+                <div className="title-ctn">
+                  <label htmlFor="upload-title" className="upload-item-label">
+                    Upload Title:
+                  </label>
+                  <input
+                    type="text"
+                    placeHolder="Upload Title"
+                    className="upload-title"
+                    id="upload-title"
+                    value={uploadTitle}
+                    onChange={(e) => setUploadTitle(e.target.value)}
+                  />
+                </div>
+                <div className="price-ctn">
+                  <label htmlFor="upload-price" className="upload-item-label">
+                    Upload Price:
+                  </label>
+                  <input
+                    type="number"
+                    placeHolder="item price"
+                    className="upload-price"
+                    id="upload-price"
+                    value={uploadPrice}
+                    onChange={(e) => setUploadPrice(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="input-form">
+                <form className="add-from">
                   <div className="text-addbtn">
                     <input
                       placeHolder="Add recipe steps"
@@ -378,69 +447,68 @@ const AccountHome = () => {
                   <output id="result" onClick={() => trashThumbnail()} />
                 </div>
               </div>
+            </div>
 
-              <div
-                className="load-upload"
-                style={{ display: fileLoader }}
-              ></div>
-              <div className="recipe-list-flex">
-                <ol>
-                  {recipeList.map((item) => {
-                    return (
-                      <li key={item} className="recipe-steps">
-                        <span>{item}</span>
-                        <span
-                          onClick={() => removeItem(item)}
-                          className="trash-splice"
-                          title="delete item"
-                        >
-                          <i class="fa-solid fa-trash"></i>
-                        </span>
-                        <span
-                          onClick={() => editItem(item)}
-                          className="edit-splice"
-                          title="edit item"
-                        >
-                          <i class="fa-solid fa-pen-nib"></i>
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ol>
-              </div>
-              <div className="upload-sub-btn">
-                <div className="upload-user-media">
-                  <label htmlFor="files" className="choose-file">
-                    Upload Media <i class="fa-solid fa-paperclip"></i>
-                    {" ("}
-                    {fileChosen}
-                    {")"}
-                  </label>
-                  <div className="hide-file-upload-btn">
-                    <input
-                      type="file"
-                      id="files"
-                      accept="image/jpg, image/png, image/jpeg, image/gif, image/tiff, image/bmp, video/mp4"
-                      onChange={(e) => checkUpload(e)}
-                    />
-                  </div>
-                </div>
-                <div className="submit-feed-btn">
-                  <div className="inner-sbt-btn">
-                    <motion.button
-                      type="submit"
-                      className="feed-smt-btn"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      post <span>{uploadProgress}%</span>
-                    </motion.button>
-                  </div>
+            <div className="load-upload" style={{ display: fileLoader }}></div>
+            <div className="recipe-list-flex">
+              <ol>
+                {recipeList.map((item) => {
+                  return (
+                    <li key={item} className="recipe-steps">
+                      <span>{item}</span>
+                      <span
+                        onClick={() => removeItem(item)}
+                        className="trash-splice"
+                        title="delete item"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </span>
+                      <span
+                        onClick={() => editItem(item)}
+                        className="edit-splice"
+                        title="edit item"
+                      >
+                        <i class="fa-solid fa-pen-nib"></i>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+            <div className="upload-sub-btn">
+              <div className="upload-user-media">
+                <label htmlFor="files" className="choose-file">
+                  Upload Media <i class="fa-solid fa-paperclip"></i>
+                  {" ("}
+                  {fileChosen}
+                  {")"}
+                </label>
+                <div className="hide-file-upload-btn">
+                  <input
+                    type="file"
+                    id="files"
+                    accept="image/jpg, image/png, image/jpeg, image/gif, image/tiff, image/bmp, video/mp4"
+                    onChange={(e) => checkUpload(e)}
+                  />
                 </div>
               </div>
-            </form>
+              <div className="submit-feed-btn">
+                <div className="inner-sbt-btn">
+                  <motion.button
+                    onClick={(e) => PushUpload(e)}
+                    type="submit"
+                    className="feed-smt-btn"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    post <span>{uploadProgress}%</span>
+                  </motion.button>
+                </div>
+              </div>
+            </div>
+            {/* </form> */}
           </div>
-
+          <div className="input-line"></div>
           <div className="feeds-items">
             {resData
               .sort(

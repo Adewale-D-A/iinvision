@@ -64,7 +64,9 @@ function HomeSreen() {
           <main className="home-main">
             <div className="img-ctn">
               <div className="dash-text">
-                <h1>recipe book</h1>
+                <div>
+                  <h1>recipe book</h1>
+                </div>
               </div>
               <motion.img
                 src={pizzaSlice1}

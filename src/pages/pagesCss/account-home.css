@@ -19,6 +19,11 @@ main[class="user-home"] {
   align-items: center;
   flex-direction: column;
 }
+.user-feed-upload-container {
+  margin-top: 5px;
+  width: 100%;
+  transition: 1s;
+}
 .toast-pop {
   font-size: 12px;
 }
@@ -57,10 +62,11 @@ main[class="user-home"] {
   height: 100px;
 } */
 .description-input {
-  width: 70vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .load-upload {
   height: 5px;
@@ -90,18 +96,21 @@ main[class="user-home"] {
   display: none;
 }
 .choose-file {
-  background-color: #100720;
+  transition: 1s;
+  background: url("../../staticAssets/noise-10.png");
+  box-shadow: inset 0 0 25px rgba(216, 203, 238, 0.3), 0 0 30px rgb(0 0 0 / 20%);
   color: white;
   border-radius: 5px;
   padding: 10px;
   font-family: sans-serif;
   cursor: pointer;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   font-size: 15px;
   width: 100%;
 }
 button[class="feed-smt-btn"] {
   all: unset;
+  transition: 1s;
   background-color: rgb(16, 7, 32);
   border-radius: 5px;
   padding: 10px;
@@ -109,7 +118,7 @@ button[class="feed-smt-btn"] {
   margin: 10px;
   font-size: 15px;
   width: 100%;
-  box-shadow: inset 0 0 25px rgba(12, 1, 31, 0.7), 0 0 30px rgb(0 0 0 / 20%);
+  box-shadow: inset 0 0 25px rgba(216, 203, 238, 0.3), 0 0 30px rgb(0 0 0 / 20%);
   background: url("../../staticAssets/noise-10.png");
 }
 .upload-user-media {
@@ -131,7 +140,7 @@ button[class="feed-smt-btn"]:hover {
   box-shadow: inset 0 0 25px rgba(31, 202, 8, 0.7), 0 0 30px rgb(0 0 0 / 20%);
 }
 .upload-sub-btn {
-  width: 70vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -217,7 +226,14 @@ button[class="feed-smt-btn"]:hover {
 }
 
 /* //receipe input steps */
-form[class="input-form"] {
+.input-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+form[class="add-from"] {
   width: 100%;
 }
 input[class="recepe-input"] {
@@ -234,7 +250,7 @@ button[class="add-btn"] {
   all: unset;
   height: 50px;
   width: 20%;
-  background-color: #448858;
+  background-color: #2a1253;
   font-size: 15px;
   transition: 0.5s;
   padding: 5px 5px 5px 10px;
@@ -280,9 +296,10 @@ button[class="add-btn"]:hover {
   overflow-y: scroll;
   overflow-x: hidden;
   text-align: left;
-  background-color: #eb5353;
+  background-color: transparent;
   scrollbar-color: #fff #eb5353;
   scrollbar-width: thin;
+  margin-top: 5px;
 }
 .recipe-list-flex::-webkit-scrollbar {
   width: 6px;
@@ -290,6 +307,73 @@ button[class="add-btn"]:hover {
 }
 .recipe-list-flex::-webkit-scrollbar-thumb {
   background-color: #ffffff;
+}
+.title-price {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+.upload-item-label {
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+input[class="upload-title"],
+input[class="upload-price"] {
+  all: unset;
+  color: black;
+  font-size: 15px;
+  background-color: azure;
+  text-align: left;
+  padding: 5px 5px 5px 15px;
+  border-radius: 0px 0px 5px 0px;
+}
+input[class="upload-title"] {
+  width: 300px;
+}
+.input-line {
+  width: 100%;
+  height: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 0px 0px 5px 5px;
+  background: url("../../staticAssets/noise-10.png");
+  box-shadow: inset 0 0 25px rgba(216, 203, 238, 0.3), 0 0 30px rgb(0 0 0 / 20%);
+}
+.click-to-display {
+  transition: 1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 10px 10px 0px 0px;
+  background: url("../../staticAssets/noise-10.png");
+  box-shadow: inset 0 0 25px rgba(216, 203, 238, 0.3), 0 0 30px rgb(0 0 0 / 20%);
+}
+.click-to-display:hover {
+  cursor: pointer;
+  background-color: #2a1253;
+  color: #ffffff;
+  box-shadow: inset 0 0 25px rgba(31, 202, 8, 0.7), 0 0 30px #2a1253;
+}
+.reverseArrow-class {
+  margin-left: 10px;
+}
+@media only screen and (max-width: 1000px) {
+  .title-ctn,
+  .price-ctn {
+    margin: 2px 0px 0px 0px;
+  }
+  input[class="upload-title"],
+  input[class="upload-price"] {
+    width: 150px;
+    font-size: 12px;
+  }
+  .choose-file {
+    font-size: 12px;
+  }
 }
 @media only screen and (max-width: 500px) {
   .feeds-items {
@@ -339,9 +423,11 @@ button[class="add-btn"]:hover {
     max-height: 150px;
   }
   .upload-sub-btn {
-    margin-top: 20px;
-    width: 70vw;
+    margin-top: 0px;
+    width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
   }
   .upload-user-media {
@@ -354,5 +440,23 @@ button[class="add-btn"]:hover {
   }
   .choose-file {
     font-size: 12px;
+  }
+  input[class="upload-title"],
+  input[class="upload-price"] {
+    width: 180px;
+    font-size: 12px;
+  }
+  .upload-item-label {
+    font-size: 12px;
+  }
+  .title-ctn,
+  .price-ctn {
+    margin: 2px 0px 0px 0px;
+  }
+  .input-form {
+    flex-wrap: wrap;
+  }
+  .user-feed-upload-container {
+    width: 90%;
   }
 }
