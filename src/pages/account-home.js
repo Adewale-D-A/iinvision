@@ -162,7 +162,13 @@ const AccountHome = () => {
       fileUpload.append("uploadPrice", uploadPrice);
       fileUpload.append("uploadType", uploadType);
 
-      if (recipeList && mediaUpload[0]) {
+      if (
+        recipeList.length > 1 &&
+        mediaUpload[0] &&
+        uploadTitle &&
+        !isNaN(uploadPrice) &&
+        uploadType
+      ) {
         setFileLoader("");
         axios
           .put(
@@ -329,17 +335,28 @@ const AccountHome = () => {
   };
 
   const [hideUpload, setHideUpload] = useState(true);
+  // const Log = () => {
+  //   console.log(typeof 4);
+  //   console.log(Number.isInteger(4.88));
+  //   console.log(!isNaN(0));
+  // };
 
   const ClickUpload = () => {
     setHideUpload(!hideUpload);
     if (!hideUpload) {
       reverseArrow.current.style.rotate = "0deg";
-      uploadref.current.style.display = "none";
       changeClickAread.current.innerHTML = "<h4>Open Upload Dock</h4>";
+      uploadref.current.style.opacity = "0";
+      setTimeout(() => {
+        uploadref.current.style.display = "none";
+      }, 300);
     } else {
       uploadref.current.style.display = "";
       reverseArrow.current.style.rotate = "180deg";
       changeClickAread.current.innerHTML = "<h4>Hide Upload Dock</h4>";
+      setTimeout(() => {
+        uploadref.current.style.opacity = "1";
+      }, 300);
     }
   };
 
@@ -545,6 +562,9 @@ const AccountHome = () => {
             {/* </form> */}
           </div>
           <div className="input-line"></div>
+          {/* <div>
+            <span onClick={() => Log()}>Console</span>
+          </div> */}
           <div className="feeds-items">
             {resData
               .sort(

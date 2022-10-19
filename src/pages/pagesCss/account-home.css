@@ -22,7 +22,7 @@ main[class="user-home"] {
 .user-feed-upload-container {
   margin-top: 5px;
   width: 100%;
-  transition: 1s;
+  transition: 0.3s ease-in-out;
 }
 .toast-pop {
   font-size: 12px;
