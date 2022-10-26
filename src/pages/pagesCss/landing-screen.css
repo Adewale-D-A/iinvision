@@ -27,7 +27,7 @@
   overflow: hidden;
   border-right: 4px solid var(--hue);
   border-radius: 5px;
-  animation: glow 2s linear 0s 1 forwards;
+  animation: glow 2s linear 0s infinite forwards;
 }
 @keyframes glow {
   from {

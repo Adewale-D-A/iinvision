@@ -1,12 +1,18 @@
-import React from "react";
+import React, { Suspense } from "react";
 //react router
 import { BrowserRouter } from "react-router-dom";
-import AnimatedRoutes from "./animatedRoutes/animatedRoutes";
+import LandingScreen from "./pages/landing-screen";
+
+const AnimatedRoutes = React.lazy(() =>
+  import("./animatedRoutes/animatedRoutes")
+);
 
 function App() {
   return (
     <BrowserRouter>
-      <AnimatedRoutes />
+      <Suspense fallback={<LandingScreen />}>
+        <AnimatedRoutes />
+      </Suspense>
     </BrowserRouter>
   );
 }
