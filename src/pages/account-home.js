@@ -398,7 +398,11 @@ const AccountHome = () => {
               </span>
             </div>
             <div className="reverseArrow-class">
-              <i ref={reverseArrow} class="fa-solid fa-chevron-down"></i>
+              <i
+                ref={reverseArrow}
+                class="fa-solid fa-chevron-down"
+                style={{ "--revolve": "180deg" }}
+              ></i>
             </div>
           </div>
           <div className="user-feed-upload-container" ref={uploadref}>

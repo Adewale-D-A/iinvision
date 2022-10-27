@@ -359,6 +359,15 @@ input[class="upload-title"] {
   color: #ffffff;
   box-shadow: inset 0 0 25px rgba(31, 202, 8, 0.7), 0 0 30px #2a1253;
 }
+.fa-chevron-down {
+  transition: 1s;
+  transform: rotate(0);
+}
+.click-to-display:hover .fa-chevron-down {
+  transition: 1s;
+  transform: rotate(var(--revolve));
+}
+
 .reverseArrow-class {
   margin-left: 10px;
 }
